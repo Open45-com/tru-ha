@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Wake</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="touch"></div>
+
+  <div id="hud" hidden>
+    <div id="timer">0.00</div>
+  </div>
+  <div id="toast"></div>
+  <button id="cam" class="chip" type="button"></button>
+
+  <div id="loading" class="card-wrap"><p>Lighting the harbor…</p></div>
+
+  <section id="title" class="card" hidden>
+    <img class="logo" src="./art/ui/logo.svg" alt="Wake">
+    <p class="lede">Slip a ferry past the harbor's searchlights.</p>
+    <ul class="how">
+      <li><b>Hold</b> anywhere to run the engine</li>
+      <li><b>Drag</b> left or right to steer</li>
+      <li><b>Let go</b> to drift quietly. Lights spot a running engine 3× faster</li>
+    </ul>
+    <button id="play" class="primary" type="button">Play</button>
+    <p id="title-best" class="sub"></p>
+  </section>
+
+  <section id="dead" class="card" hidden>
+    <h2 id="dead-title">Sunk</h2>
+    <p id="dead-by" class="sub"></p>
+    <p id="dead-time" class="sub"></p>
+    <button id="retry" class="primary" type="button">Tap to retry</button>
+  </section>
+
+  <section id="finish" class="card" hidden>
+    <p class="sub">Safe in harbor</p>
+    <div id="fin-time" class="big">0.00</div>
+    <p id="fin-best" class="sub"></p>
+    <p id="fin-rank" class="sub"></p>
+    <ol id="board" hidden></ol>
+    <button id="again" class="primary" type="button">Run again</button>
+    <button class="ghost" type="button" disabled>Leave your trap · coming next</button>
+  </section>
+
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
