@@ -53,5 +53,17 @@
     "license": "original",
     "author": "Chikoritaa / GPT-6.2 Astra for Wake",
     "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/models/shore_cliff.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
+    "modified": "Original modular tidal escarpment, planed basalt, fallen foreledge blocks and five wind-shaped pines; authored in Blender (no downloaded content)."
+  },
+  "art/models/shore_village.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
+    "modified": "Original modular Long Sound fishing hamlet, six lit casements, stepped timber landing and moored clinker dinghy; authored in Blender (no downloaded content)."
   }
 }
