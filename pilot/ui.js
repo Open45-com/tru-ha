@@ -80,6 +80,14 @@ function render(){
     if(player.choice)d.textContent=(player.choice==='beacon'?'Your lantern is at the lighthouse.':'Your lantern is at your cabin.')+' Cabin lights: '+cabins+'.';
     else if(player.score!==null){
       if(confirmChoice){
+        const privateCabin=confirmChoice==='cabin';
+        const preview=document.createElement('img');
+        preview.className='destination-preview';
+        preview.alt=privateCabin?'Preview: a glowing lantern outside your cabin':'Preview: the harbor lighthouse beacon lit';
+        preview.width=360;preview.height=360;
+        preview.onerror=()=>preview.remove();
+        preview.src=privateCabin?'/art/02_keep_at_cabin.webp':'/art/04_send_to_lighthouse.webp';
+        d.append(preview);
         d.append(confirmChoice==='beacon'?'Give this light to the harbor? Your cabin will stay as it is.':'Keep this light at home? It will count toward the cabin side of the tally.');
         d.append(document.createElement('br'));btn('Confirm',()=>load(confirmChoice));
         btn('Go back',()=>{confirmChoice='';render();});
