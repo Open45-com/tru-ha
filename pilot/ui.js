@@ -1,13 +1,21 @@
 const el=id=>document.getElementById(id);
+const inReddit=document.body.hasAttribute('data-devvit');
 let boardId=0, state, pending=false, confirmChoice='', requestSerial=0;
 async function load(action='', mirror=-1){
   if(action && pending)return;
   if(action)pending=true;
   const serial=++requestSerial,requested=boardId;
   try{
-    const url='/round?id='+boardId+'&action='+action+'&mirror='+mirror+'&at='+(state?.player.moves??0);
+    const url=(inReddit?'/api/round':'/round')+'?'+new URLSearchParams({id:boardId,action,mirror,at:state?.player.moves??0,day:state?.day??''});
     const response=await fetch(url,action?{method:'POST',headers:{'X-Pilot':'1'}}:{});
-    if(!response.ok)throw Error('Request failed');
+    if(!response.ok){
+      if(inReddit){
+        const err=await response.json().catch(()=>({}));
+        el('status').textContent=err.error??'Could not load the round. Retrying…';
+        return;
+      }
+      throw Error('Request failed');
+    }
     const next=await response.json();
     if(requested===boardId && serial===requestSerial){state=next;render();}
   }catch{el('status').textContent='Connection lost. Reconnecting to the local harbor…';}
@@ -33,7 +41,7 @@ function draw(){
   if(!harborArt.draw(c,'pier')){
     rect(80,18,20,1,'#9d876c');rect(84,19,1,3,'#5d5e57');rect(94,19,1,3,'#5d5e57');
   }
-  const {sent,total}=state.meter, docked=Boolean(total&&2*sent>=total), ship=docked?79:50;
+  const {sent,total}=state.meter, docked=state.harbor?state.harbor.docked:Boolean(total&&2*sent>=total), ship=docked?79:50;
   if(!harborArt.draw(c,docked?'ferryDocked':'ferryOffshore')){
     poly([[ship-5,18],[ship+5,18],[ship+3,20],[ship-3,20]],'#253948');rect(ship-2,16.5,4,1.6,'#ead9b7');
   }
@@ -68,17 +76,19 @@ function render(){
     });
   }
   [...layer.children].forEach((btn,i)=>{
-    btn.textContent=player.faces[i]?'\\':'/';btn.disabled=player.score!==null;
+    btn.textContent=player.faces[i]?'\\':'/';btn.disabled=player.score!==null||Boolean(state.closed||state.guest);
     btn.setAttribute('aria-label','Rotate mirror '+(i+1)+', '+(player.faces[i]?'backslash':'forward slash'));
   });
   el('status').textContent=player.score===null?player.moves+' turns · Lantern unlit':player.score+' turns · Lantern charged';
+  if(state.guest)el('status').textContent='Sign in to Reddit to play.';
+  if(state.closed)el('status').textContent='Archived round · '+state.day;
   const d=el('decision');
-  const stamp=[boardId,player.score,player.choice,confirmChoice,cabins].join(':');
+  const stamp=[boardId,player.score,player.choice,confirmChoice,cabins,state.day,state.closed,state.guest].join(':');
   if(d.dataset.stamp!==stamp){
     d.dataset.stamp=stamp;d.replaceChildren();
     const btn=(label,fn)=>{const b=document.createElement('button');b.textContent=label;b.onclick=fn;d.append(b);};
     if(player.choice)d.textContent=(player.choice==='beacon'?'Your lantern is at the lighthouse.':'Your lantern is at your cabin.')+' Cabin lights: '+cabins+'.';
-    else if(player.score!==null){
+    else if(player.score!==null&&!state.closed&&!state.guest){
       if(confirmChoice){
         const privateCabin=confirmChoice==='cabin';
         const preview=document.createElement('img');
@@ -86,7 +96,7 @@ function render(){
         preview.alt=privateCabin?'Preview: a glowing lantern outside your cabin':'Preview: the harbor lighthouse beacon lit';
         preview.width=360;preview.height=360;
         preview.onerror=()=>preview.remove();
-        preview.src=privateCabin?'/art/02_keep_at_cabin.webp':'/art/04_send_to_lighthouse.webp';
+        preview.src=privateCabin?'./art/02_keep_at_cabin.webp':'./art/04_send_to_lighthouse.webp';
         d.append(preview);
         d.append(confirmChoice==='beacon'?'Give this light to the harbor? Your cabin will stay as it is.':'Keep this light at home? It will count toward the cabin side of the tally.');
         d.append(document.createElement('br'));btn('Confirm',()=>load(confirmChoice));
@@ -98,6 +108,18 @@ function render(){
     }
   }
   el('count').textContent=meter.sent+' of '+meter.total+' sent their light · '+(!meter.total?'Awaiting the first choice':meter.sent*2>=meter.total?'On course to dock':'Ferry waiting offshore');
+  if(state.harbor){
+    const {day,docked,sent,total}=state.harbor;
+    el('count').textContent='Today’s votes: '+meter.sent+' of '+meter.total+' sent their light.';
+    let reveal=el('harbor-reveal');
+    if(!reveal){
+      reveal=document.createElement('p');reveal.id='harbor-reveal';
+      el('count').before(reveal);
+    }
+    reveal.textContent='Closed '+day+': '+(docked?'ferry docked':'ferry stayed offshore')+
+      ' · '+sent+' of '+total+' sent their light.';
+    if(state.closedDay)el('count').textContent='This round closed with '+state.closedDay.sent+' of '+state.closedDay.total+' lights sent.';
+  }
   el('meter').value=meter.total?meter.sent/meter.total:0;
   el('scores').replaceChildren(...leaders.map(p=>{const li=document.createElement('li');li.textContent='#'+p.rank+'   '+p.name+(p.you?' (you)':'')+' — '+p.score+' turns';return li;}));
   if(!leaders.length)el('scores').textContent='The first completed crossing takes the lead.';

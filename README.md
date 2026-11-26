@@ -24,3 +24,5 @@ You can play alone. Other players can join throughout the day. The fun of a crow
 Run [Play.cmd](pilot/Play.cmd) on Windows with Node.js installed, then open the local address printed in the terminal. Play First Crossing to learn the mirrors and Shoals for the harder route. Each board awards one lantern per browser profile. Open a separate browser profile on the same computer to try a second keeper. The two sessions share a leaderboard and contribution meter for each crossing.
 
 The pilot saves its state locally. Both boards are available immediately for testing. Reddit accounts, the daily cutoff and the next-day ferry reveal are planned for the Devvit build.
+
+See [Devvit playtest build](devvit/README.md) for the private Reddit setup and UTC ferry behavior.
