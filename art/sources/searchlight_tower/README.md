@@ -1,0 +1,10 @@
+# Tideglass searchlight V2 • Wake Gate 0
+Original design and geometry, generated with GPT-6.2 Astra. No external models, textures, fonts, scans or CC0-kit derivatives.
+
+**Rebuild:** from the repository root, run `blender -b -t 2 -P art/sources/searchlight_tower/build.py` (authored on Blender 4.3.2). Add `-- --blend` to save a fresh editable master too. The .blend contains named assemblies, and the batched meshes retain groups for the 13 labeled components. Edit the generator for repeatable revisions.
+
+**Basis:** glTF is right-handed, +Y up. The root sits at the waterline. The steel yoke, cooling barrel, Fresnel optics, nickel visor and latching hardware rotate together under `head`. Rotate `head.rotation.y` in the viewer. `lens` is an empty at the front center; the local forward ray is (0,0,-1). Put the renderer-owned light/cone here; do not add it to the GLB. The lens is 0.622 m in diameter; the main barrel is ~0.80 m long. The model is 4.4 m wide; its collision radius is 2.2 m. Terrain falls to −0.380 m; y=0 is the designed game water plane. Rock planes, a continuous tide-polished band and small flush moss streaks establish the bedrock. The pale sloped plinth shoulder, electro-galvanized edges and a broad porcelain-enamel cowl separate the fixture from the islet under night fill. No secondary emissive materials.
+
+**Verify:** `python3 art/sources/searchlight_tower/verify.py` checks world bounds, port orientation, hierarchy and pivot behavior, including simulated ±45° sweeps on the decoded vertex positions. `npm run art:check -- searchlight_tower` checks contract names, file size, poly budget and credit. Do not bypass the human gate with a stand-in screenshot.
+
+**Rendering:** use a 40° vertical-FOV perspective lens pitched down 55°, not a 55° FOV. The canonical shot is a 1170×2532 render from Sven’s night viewer with Choco’s ferry present for scale. V2 proof compares the same 1170×2532 Sven viewer capture at fixed yaw, lighting and camera with and without the V2 GLB. It uses the real ferry but still reports rock_m as a placeholder. Final review with the real rock remains outstanding.
