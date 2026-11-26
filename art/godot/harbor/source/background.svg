@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024"><defs>
+<linearGradient id="sky" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#243047" /><stop offset="1" stop-color="#66516B" /></linearGradient>
+<linearGradient id="sea" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#254A59" /><stop offset="1" stop-color="#112634" /></linearGradient>
+</defs>
+<g id="landscape">
+<path fill="url(#sky)" d="M0 0h1024v205H0z" />
+<path fill="#E6B98F" d="M794 81a35 35 0 1 1 70 0 35 35 0 1 1-70 0" />
+<path fill="#C69382" opacity=".35" d="M600 113h312v2H600zM720 125h230v2H720z" />
+<path fill="#3B495C" d="m0 143 102-20 77-27 95 38 111 14 124-35 109 27 98 3 109-26 108 18 91-6v69H0z" />
+<path fill="url(#sea)" d="M0 186h1024v838H0z" />
+<path fill="#213B4A" d="M0 150l95-16 103 12 54 25 74 9-77 24-132 9L0 251zm1024-2-67-6-64 16-64 22 80 9 115 46z" />
+<path fill="none" stroke="#638189" stroke-opacity=".24" stroke-width="3" d="M335 188h122m13 0h57m25 0h126m19 0h127M818 210h64M4 253l42-11m910 6 68 14" />
+<path fill="none" stroke="#698891" stroke-opacity=".19" stroke-width="3" stroke-linecap="round" d="M18 325h38m922-5h25m-10 164h20M19 502h46m895 44h30M19 744h22m934-44h24M22 904h41m887-30h49m-592 128h116m26 0h58" />
+</g>
+</svg>
