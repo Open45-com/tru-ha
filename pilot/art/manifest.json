@@ -1,0 +1,124 @@
+{
+  "canvasSize": 1024,
+  "sprites": {
+    "background": {
+      "file": "background.webp",
+      "width": 1024,
+      "height": 1024,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "pier": {
+      "file": "pier.png",
+      "width": 204,
+      "height": 62,
+      "anchor": [
+        94,
+        13
+      ],
+      "placement": [
+        900,
+        205
+      ]
+    },
+    "ferryOffshore": {
+      "file": "ferry.png",
+      "width": 120,
+      "height": 50,
+      "anchor": [
+        60,
+        22
+      ],
+      "placement": [
+        520,
+        188
+      ]
+    },
+    "ferryDocked": {
+      "file": "ferry.png",
+      "width": 120,
+      "height": 50,
+      "anchor": [
+        60,
+        22
+      ],
+      "placement": [
+        862,
+        188
+      ]
+    },
+    "mooring": {
+      "file": "mooring.png",
+      "width": 30,
+      "height": 32,
+      "anchor": [
+        4,
+        5
+      ],
+      "placement": [
+        911,
+        191
+      ]
+    },
+    "cargo": {
+      "file": "crate.png",
+      "width": 24,
+      "height": 20,
+      "anchor": [
+        12,
+        18
+      ],
+      "placement": [
+        965,
+        202
+      ]
+    },
+    "emitter": {
+      "file": "emitter.png",
+      "width": 76,
+      "height": 56,
+      "anchor": [
+        64,
+        28
+      ]
+    },
+    "mirrorMount": {
+      "file": "mirror_mount.png",
+      "width": 94,
+      "height": 94,
+      "anchor": [
+        47,
+        47
+      ]
+    },
+    "mirrorFace": {
+      "file": "mirror_face.png",
+      "width": 94,
+      "height": 94,
+      "anchor": [
+        47,
+        47
+      ]
+    },
+    "lanternEmpty": {
+      "file": "lantern_empty.png",
+      "width": 78,
+      "height": 96,
+      "anchor": [
+        39,
+        53
+      ]
+    },
+    "lanternCharged": {
+      "file": "lantern_charged.png",
+      "width": 78,
+      "height": 96,
+      "anchor": [
+        39,
+        53
+      ]
+    }
+  }
+}

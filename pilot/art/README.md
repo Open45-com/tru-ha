@@ -33,3 +33,10 @@ top-left pixel boundary. `placement` is the location of that anchor on the
 - At 360 px, verify both boards, both diagonals and a lantern state change
   without a position shift. Keep the opaque background in WebP and props
   transparent PNG. Keep editable Godot and layered source files separately.
+
+## Included gray-box exports
+
+- Harbor: Choco, `choco/harbor-graybox` at `5f50558`, under `art/godot/harbor/web`.
+- Puzzle: Owwol, Slack delivery “Puzzle gray-box v0.1”, under `puzzle/web`.
+- `manifest.json` translates those handoffs without changing any image bytes.
+  The docked composition also uses the separate `mooring` prop.

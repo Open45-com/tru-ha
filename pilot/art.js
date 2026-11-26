@@ -4,7 +4,7 @@ const harborArt = (() => {
   const sprites = Object.create(null);
   const ready = (name) => Boolean(sprites[name]);
   const validPair = (p) => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite);
-  const known = ['background', 'pier', 'ferryOffshore', 'ferryDocked', 'cargo', 'emitter',
+  const known = ['background', 'pier', 'ferryOffshore', 'ferryDocked', 'mooring', 'cargo', 'emitter',
     'mirrorMount', 'mirrorFace', 'lanternEmpty', 'lanternCharged'];
   async function load() {
     const response = await fetch('/art/manifest.json');

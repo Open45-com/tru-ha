@@ -37,7 +37,7 @@ function draw(){
   if(!harborArt.draw(c,docked?'ferryDocked':'ferryOffshore')){
     poly([[ship-5,18],[ship+5,18],[ship+3,20],[ship-3,20]],'#253948');rect(ship-2,16.5,4,1.6,'#ead9b7');
   }
-  if(docked)harborArt.draw(c,'cargo');
+  if(docked){harborArt.draw(c,'mooring');harborArt.draw(c,'cargo');}
   const pt=geometry(),b=state.board;
   for(let y=0;y<b.size;y++)for(let x=0;x<b.size;x++){const [px,py]=pt(x,y);rect(px-.25,py-.25,.5,.5,'#87a3a6');}
   const dest=pt(...b.target);
