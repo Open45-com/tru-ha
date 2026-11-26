@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "until-tomorrow",
+  "post": {
+    "dir": "dist/client",
+    "entrypoints": {"default": {"entry": "index.html", "height": "tall"}}
+  },
+  "server": {"dir": "dist/server", "entry": "index.cjs"},
+  "permissions": {"redis": true, "reddit": {"enable": true}},
+  "menu": {"items": [
+    {
+      "label": "Create today's Until Tomorrow playtest",
+      "description": "Create a dated puzzle in this test subreddit",
+      "location": "subreddit",
+      "forUserType": "moderator",
+      "endpoint": "/internal/menu/post-create"
+    }
+  ]},
+  "scripts": {"build": "npm run build"}
+}

@@ -1,0 +1,20 @@
+{
+  "name": "until-tomorrow-playtest",
+  "private": true,
+  "version": "0.0.1",
+  "engines": {"node": ">=24"},
+  "scripts": {
+    "build": "node devvit/build.cjs",
+    "test": "node --test pilot/art.test.cjs devvit/*.test.cjs",
+    "playtest": "devvit playtest"
+  },
+  "dependencies": {
+    "@devvit/web": "0.15.6",
+    "@hono/node-server": "2.1.6",
+    "hono": "4.13.17"
+  },
+  "devDependencies": {
+    "devvit": "0.15.6",
+    "esbuild": "^0.25.0"
+  }
+}

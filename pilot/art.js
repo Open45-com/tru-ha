@@ -7,7 +7,7 @@ const harborArt = (() => {
   const known = ['background', 'pier', 'ferryOffshore', 'ferryDocked', 'mooring', 'cargo', 'emitter',
     'mirrorMount', 'mirrorFace', 'lanternEmpty', 'lanternCharged'];
   async function load() {
-    const response = await fetch('/art/manifest.json');
+    const response = await fetch('./art/manifest.json');
     if (!response.ok) return;
     const data = await response.json();
     if (data.canvasSize !== size || !data.sprites) return;
@@ -22,7 +22,7 @@ const harborArt = (() => {
           anchor[0] > width || anchor[1] > height ||
           (placement !== undefined && !validPair(placement))) return;
       const img = new Image();
-      img.src = '/art/' + spec.file;
+      img.src = './art/' + spec.file;
       try { await img.decode(); } catch { return; }
       if (img.naturalWidth === width && img.naturalHeight === height) sprites[name] = {...spec, img};
     }));
