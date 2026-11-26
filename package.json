@@ -8,14 +8,15 @@
   "scripts": {
     "art:check": "node tools/art.cjs",
     "test": "node --test",
-    "viewer": "echo \"Asset viewer is built in Gate 0 (BUILD_PLAN.md section 6)\"",
+    "viewer": "node tools/viewer.cjs",
     "build": "echo \"Build is set up in Gate 0 (BUILD_PLAN.md section 6)\"",
     "playtest": "devvit playtest"
   },
   "dependencies": {
     "@devvit/web": "0.15.6",
     "@hono/node-server": "2.1.6",
-    "hono": "4.13.17"
+    "hono": "4.13.17",
+    "three": "0.180.0"
   },
   "devDependencies": {
     "devvit": "0.15.6",
