@@ -6,6 +6,9 @@ function createApp({getContext,reddit,redis,now=Date.now}){
 const app=new Hono();
 const store=makeStore(redis,now);
 const noCache={'Cache-Control':'private, no-store'};
+const postKey=day=>'harbor:post:'+day;
+const postUrl=id=>typeof id==='string'&&/^t3_[a-z0-9]+$/.test(id)
+  ? 'https://www.reddit.com/comments/'+id.slice(3)+'/' : null;
 
 app.on(['GET','POST'],'/api/round',async c=>{
   const context=getContext();
@@ -24,13 +27,14 @@ app.on(['GET','POST'],'/api/round',async c=>{
     if(result.status==='closed')return c.json({error:'This day has closed.'},409,noCache);
     if(result.status==='full'||result.status==='busy')return c.json({error:'Playtest is at capacity or busy.'},503,noCache);
   }
-  const [roster,previous,history,archived]=await Promise.all([
+  const [roster,previous,history,archived,currentPost]=await Promise.all([
     store.players(day),
     store.freeze(shiftDay(day,-1)),
     id?store.history(day):[],
-    closed?store.freeze(day):null
+    closed?store.freeze(day):null,
+    closed?redis.get(postKey(today)):null
   ]);
-  return c.json(view(day,roster,id,previous,closed,history,archived),200,noCache);
+  return c.json({...view(day,roster,id,previous,closed,history,archived),todayPostUrl:postUrl(currentPost)},200,noCache);
 });
 
 app.post('/internal/menu/post-create',async c=>{
@@ -40,7 +44,8 @@ app.post('/internal/menu/post-create',async c=>{
   // The Devvit menu is moderator-only. Creating a second post for the same
   // date still points to the same Redis round, so no second ballot is possible.
   const post=await reddit.submitCustomPost({title:'Until Tomorrow · '+day,postData:{day}});
-  return c.json({navigateTo:'https://www.reddit.com/r/'+context.subredditName+'/comments/'+post.id.replace(/^t3_/,'')});
+  await redis.set(postKey(day),post.id);
+  return c.json({navigateTo:postUrl(post.id)});
 });
 
 return app;

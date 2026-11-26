@@ -6,7 +6,7 @@ const {makeStore}=require('./store.cjs');
 function memoryRedis(){
   const map=new Map(),revisions=new Map();
   const get=async k=>map.get(k);
-  return {get,mGet:ks=>Promise.all(ks.map(get)),async watch(...keys){
+  return {get,set:async(k,v)=>{map.set(k,v);revisions.set(k,(revisions.get(k)??0)+1);},mGet:ks=>Promise.all(ks.map(get)),async watch(...keys){
     const initial=keys.map(k=>revisions.get(k));
     const writes=[];
     return {multi:async()=>{},discard:async()=>{},unwatch:async()=>{},set:async(k,v)=>writes.push([k,v]),async exec(){
@@ -103,4 +103,34 @@ test('Devvit API rejects archived, stale and guest mutations, while returning a 
   const opening=await(await next.request('/api/round')).json();
   assert.equal(opening.harbor.docked,true);
   assert.equal(opening.meter.total,0);
+});
+
+
+test('an archived post links to the new puzzle only when today’s post exists',async()=>{
+  const {createApp}=require('./routes.cjs');
+  let now=Date.parse('2026-11-26T23:59:00Z'),day='2026-11-26',id='t3_old1';
+  const redis=memoryRedis();
+  const app=createApp({getContext:()=>({postData:{day},subredditName:'test'}),redis,now:()=>now,
+    reddit:{submitCustomPost:async payload=>{
+      assert.equal(payload.postData.day,dayKey(now));
+      return {id};
+    }}});
+  const create=()=>app.request('/internal/menu/post-create',{method:'POST'}).then(r=>r.json());
+  const round=()=>app.request('/api/round').then(r=>r.json());
+  assert.equal((await create()).navigateTo,'https://www.reddit.com/comments/old1/');
+  assert.equal((await round()).todayPostUrl,null);
+  now=Date.parse('2026-11-27T00:00:00Z');
+  const old=await round();
+  assert.equal(old.closed,true);
+  assert.equal(old.todayPostUrl,null);
+  id='t3_new2';
+  assert.equal((await create()).navigateTo,'https://www.reddit.com/comments/new2/');
+  const linked=await round();
+  assert.equal(linked.todayPostUrl,'https://www.reddit.com/comments/new2/');
+  assert.deepEqual(linked.closedDay,old.closedDay);
+  assert.deepEqual(linked.leaders,old.leaders);
+  assert.deepEqual(linked.meter,old.meter);
+  day='2026-11-27';
+  assert.equal((await round()).closed,false);
+  assert.equal((await round()).todayPostUrl,null);
 });

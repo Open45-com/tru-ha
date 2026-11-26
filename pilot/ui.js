@@ -1,6 +1,18 @@
 const el=id=>document.getElementById(id);
 const inReddit=document.body.hasAttribute('data-devvit');
 let boardId=0, state, pending=false, confirmChoice='', requestSerial=0;
+let practicePlayer=null;
+const canPractice=()=>inReddit&&Boolean(state.closed||state.guest);
+const visiblePlayer=()=>practicePlayer??state.player;
+const visibleLight=()=>practicePlayer?harborPractice.trace(state.board,practicePlayer.faces):state.light;
+function turnMirror(index){
+  if(practicePlayer){
+    harborPractice.takeAction(state.board,practicePlayer,'turn',index,practicePlayer.moves);
+    render();
+  }else if(!state.closed&&!state.guest){
+    load('turn',index);
+  }
+}
 async function load(action='', mirror=-1){
   if(action && pending)return;
   if(action)pending=true;
@@ -17,7 +29,10 @@ async function load(action='', mirror=-1){
       throw Error('Request failed');
     }
     const next=await response.json();
-    if(requested===boardId && serial===requestSerial){state=next;render();}
+    if(requested===boardId && serial===requestSerial){
+      if(state?.day!==next.day||!(next.closed||next.guest))practicePlayer=null;
+      state=next;render();
+    }
   }catch{el('status').textContent='Connection lost. Reconnecting to the local harbor…';}
   finally{if(action)pending=false;}
 }
@@ -41,7 +56,9 @@ function draw(){
   if(!harborArt.draw(c,'pier')){
     rect(80,18,20,1,'#9d876c');rect(84,19,1,3,'#5d5e57');rect(94,19,1,3,'#5d5e57');
   }
-  const {sent,total}=state.meter, docked=state.harbor?state.harbor.docked:Boolean(total&&2*sent>=total), ship=docked?79:50;
+  const {sent,total}=state.meter, harbor=state.closedDay??state.harbor;
+  const docked=harbor?harbor.docked:Boolean(total&&2*sent>=total), ship=docked?79:50;
+  const player=visiblePlayer(),light=visibleLight();
   if(!harborArt.draw(c,docked?'ferryDocked':'ferryOffshore')){
     poly([[ship-5,18],[ship+5,18],[ship+3,20],[ship-3,20]],'#253948');rect(ship-2,16.5,4,1.6,'#ead9b7');
   }
@@ -49,21 +66,48 @@ function draw(){
   const pt=geometry(),b=state.board;
   for(let y=0;y<b.size;y++)for(let x=0;x<b.size;x++){const [px,py]=pt(x,y);rect(px-.25,py-.25,.5,.5,'#87a3a6');}
   const dest=pt(...b.target);
-  if(!harborArt.draw(c,state.light.solved?'lanternCharged':'lanternEmpty',...dest)){
-    rect(dest[0]-2.2,dest[1]-2.8,4.4,5.6,state.light.solved?'#ffdd83':'#b0c2b7');
+  if(!harborArt.draw(c,light.solved?'lanternCharged':'lanternEmpty',...dest)){
+    rect(dest[0]-2.2,dest[1]-2.8,4.4,5.6,light.solved?'#ffdd83':'#b0c2b7');
     rect(dest[0]-1.1,dest[1]-3.8,2.2,1.2,'#c7a879');
   }
   harborArt.draw(c,'emitter',...pt(...b.start));
   b.mirrors.forEach(([x,y],i)=>{
     const pos=pt(x,y);
     harborArt.draw(c,'mirrorMount',...pos);
-    harborArt.draw(c,'mirrorFace',...pos,state.player.faces[i]?Math.PI/2:0);
+    harborArt.draw(c,'mirrorFace',...pos,player.faces[i]?Math.PI/2:0);
   });
-  c.beginPath();state.light.path.map(([x,y])=>pt(x,y)).forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));
+  c.beginPath();light.path.map(([x,y])=>pt(x,y)).forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));
   c.strokeStyle='#e7bc7450';c.lineWidth=2.2;c.stroke();c.strokeStyle='#ffdf9a';c.lineWidth=.65;c.stroke();
 }
+function renderPractice(){
+  const controls=el('practice');
+  controls.hidden=!canPractice();
+  if(controls.hidden)return;
+  const stamp=[state.closed,state.todayPostUrl,Boolean(practicePlayer)].join(':');
+  if(controls.dataset.stamp===stamp)return;
+  controls.dataset.stamp=stamp;
+  controls.replaceChildren();
+  const start=document.createElement('button');
+  start.textContent=practicePlayer?'Restart practice':state.closed?'Practice this crossing':'Play practice';
+  start.onclick=()=>{
+    practicePlayer=harborPractice.newPlayer(state.board);
+    render();
+    el('mirrors').firstElementChild?.focus();
+  };
+  controls.append(start);
+  if(state.closed&&state.todayPostUrl){
+    const today=document.createElement('button');
+    today.textContent='Open today’s puzzle on Reddit';
+    today.onclick=()=>harborPractice.navigateTo(state.todayPostUrl);
+    controls.append(' ',today);
+  }
+  const note=document.createElement('p');
+  note.textContent='Practice does not change scores, lantern choices or ferry results.';
+  controls.append(note);
+}
 function render(){
-  const {board,player,leaders,meter,cabins}=state,pt=geometry();
+  const {board,leaders,meter,cabins}=state,player=visiblePlayer(),pt=geometry();
+  renderPractice();
   el('title').textContent=board.name;draw();
   const layer=el('mirrors');
   layer.classList.toggle('art-ready',harborArt.ready('mirrorFace'));
@@ -72,22 +116,29 @@ function render(){
     board.mirrors.forEach(([x,y],i)=>{
       const button=document.createElement('button'),[px,py]=pt(x,y);
       button.style.left=px+'%';button.style.top=py+'%';
-      button.onclick=()=>load('turn',i);layer.append(button);
+      button.onclick=()=>turnMirror(i);layer.append(button);
     });
   }
   [...layer.children].forEach((btn,i)=>{
-    btn.textContent=player.faces[i]?'\\':'/';btn.disabled=player.score!==null||Boolean(state.closed||state.guest);
+    btn.textContent=player.faces[i]?'\\':'/';btn.disabled=player.score!==null||(!practicePlayer&&Boolean(state.closed||state.guest));
     btn.setAttribute('aria-label','Rotate mirror '+(i+1)+', '+(player.faces[i]?'backslash':'forward slash'));
   });
   el('status').textContent=player.score===null?player.moves+' turns · Lantern unlit':player.score+' turns · Lantern charged';
-  if(state.guest)el('status').textContent='Sign in to Reddit to play.';
+  if(state.guest)el('status').textContent='Sign in to Reddit for the ranked round.';
   if(state.closed)el('status').textContent='Archived round · '+state.day;
+  if(practicePlayer){
+    const moves=player.moves+' '+(player.moves===1?'turn':'turns');
+    el('status').textContent='Practice · '+moves+(player.score===null?' · Lantern unlit':' · Lantern charged');
+  }
   const d=el('decision');
-  const stamp=[boardId,player.score,player.choice,confirmChoice,cabins,state.day,state.closed,state.guest].join(':');
+  const stamp=[boardId,player.score,player.choice,confirmChoice,cabins,state.day,state.closed,state.guest,Boolean(practicePlayer)].join(':');
   if(d.dataset.stamp!==stamp){
     d.dataset.stamp=stamp;d.replaceChildren();
     const btn=(label,fn)=>{const b=document.createElement('button');b.textContent=label;b.onclick=fn;d.append(b);};
-    if(player.choice)d.textContent=(player.choice==='beacon'?'Your lantern is at the lighthouse.':'Your lantern is at your cabin.')+' Cabin lights: '+cabins+'.';
+    if(practicePlayer){
+      if(player.score!==null)d.textContent='Practice complete. No score or lantern choice was recorded.';
+    }
+    else if(player.choice)d.textContent=(player.choice==='beacon'?'Your lantern is at the lighthouse.':'Your lantern is at your cabin.')+' Cabin lights: '+cabins+'.';
     else if(player.score!==null&&!state.closed&&!state.guest){
       if(confirmChoice){
         const privateCabin=confirmChoice==='cabin';
@@ -109,7 +160,7 @@ function render(){
   }
   el('count').textContent=meter.sent+' of '+meter.total+' sent their light · '+(!meter.total?'Awaiting the first choice':meter.sent*2>=meter.total?'On course to dock':'Ferry waiting offshore');
   if(state.harbor){
-    const {day,docked,sent,total}=state.harbor;
+    const {day,docked,sent,total}=state.closedDay??state.harbor;
     el('count').textContent='Today’s votes: '+meter.sent+' of '+meter.total+' sent their light.';
     let reveal=el('harbor-reveal');
     if(!reveal){

@@ -34,11 +34,21 @@ replace a test on Reddit.
 5. Record the device, post URL, board, both choice previews, one confirmation,
    initial load, and whether the previous-day reveal remains stable as
    today's tally changes. The two boards alternate daily at 00:00 UTC.
+6. Reopen the exact same candidate submission URL after 00:00 UTC from a
+   different, non-moderator account. Select **Practice this crossing**,
+   solve the board, and verify the closed result, scores and tally stay
+   unchanged. If today's post exists, follow **Open today’s puzzle on
+   Reddit** and verify the live round loads on the phone. Practice is also
+   available when signed out; test signed-out Reddit access separately.
 
 ## Scope and follow-ups
 
 - A post is bound to its creation day. Same-day posts share a round per app
-  installation; previous dates are read-only.
+  installation; previous dates are read-only for ranked play. Archived posts
+  offer local practice without recording a score or choice. Creating a post
+  from the moderator menu records the current day's link for archives; if
+  no post was created with this build today, practice is still available
+  and the link is hidden.
 - The live meter is separate from the closed tally that drives the ferry.
   A nonempty tie docks. No votes means offshore. Ballots are atomic,
   one per signed-in player per day, and do not leak to the public leaderboard.
