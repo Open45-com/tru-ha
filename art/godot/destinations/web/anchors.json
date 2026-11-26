@@ -1,0 +1,152 @@
+{
+  "canvas": [
+    1024,
+    1024
+  ],
+  "sprites": {
+    "lighthouse": {
+      "filename": "lighthouse.png",
+      "width": 128,
+      "height": 192,
+      "anchor": [
+        64,
+        177
+      ],
+      "harbor_anchor": [
+        70,
+        160
+      ],
+      "harbor_render_height": 75
+    },
+    "lighthouse_glow": {
+      "filename": "lighthouse_glow.png",
+      "width": 128,
+      "height": 192,
+      "anchor": [
+        64,
+        177
+      ],
+      "harbor_anchor": [
+        70,
+        160
+      ],
+      "harbor_render_height": 75
+    },
+    "cabin": {
+      "filename": "cabin.png",
+      "width": 240,
+      "height": 170,
+      "anchor": [
+        120,
+        146
+      ],
+      "harbor_anchor": [
+        976,
+        183
+      ],
+      "harbor_render_height": 62
+    },
+    "cabin_window_light": {
+      "filename": "cabin_window_light.png",
+      "width": 240,
+      "height": 170,
+      "anchor": [
+        120,
+        146
+      ],
+      "harbor_anchor": [
+        976,
+        183
+      ],
+      "harbor_render_height": 62
+    },
+    "lantern_charged": {
+      "filename": "../../puzzle/web/lantern_charged.png",
+      "width": 78,
+      "height": 96,
+      "anchor": [
+        39,
+        9
+      ],
+      "source": "Owwol puzzle kit v0.1"
+    }
+  },
+  "cabin_hanging_slots": {
+    "coordinate_space": "cabin PNG top-left, 240x170 at native size; hooks can extend below cabin sprite",
+    "points": [
+      [
+        120,
+        160
+      ],
+      [
+        88,
+        160
+      ],
+      [
+        152,
+        160
+      ],
+      [
+        56,
+        160
+      ],
+      [
+        184,
+        160
+      ],
+      [
+        24,
+        160
+      ],
+      [
+        216,
+        160
+      ]
+    ],
+    "lantern_render_width": 22,
+    "occupancy_order": "center first, then alternate sides"
+  },
+  "status": "review build, using shared puzzle lantern [39,9]",
+  "choice_previews": {
+    "01_empty_cabin": {
+      "filename": "01_empty_cabin.webp",
+      "width": 360,
+      "height": 360,
+      "anchor": [
+        0,
+        0
+      ],
+      "audience": "private"
+    },
+    "02_keep_at_cabin": {
+      "filename": "02_keep_at_cabin.webp",
+      "width": 360,
+      "height": 360,
+      "anchor": [
+        0,
+        0
+      ],
+      "audience": "private"
+    },
+    "03_cabin_week_fit": {
+      "filename": "03_cabin_week_fit.webp",
+      "width": 360,
+      "height": 360,
+      "anchor": [
+        0,
+        0
+      ],
+      "audience": "private"
+    },
+    "04_send_to_lighthouse": {
+      "filename": "04_send_to_lighthouse.webp",
+      "width": 360,
+      "height": 360,
+      "anchor": [
+        0,
+        0
+      ],
+      "audience": "public"
+    }
+  }
+}
