@@ -1,0 +1,16 @@
+Export and staged inspection inputs (SHA-256):
+ee3ca6c55b5558549b76d3e98881a9c43de4ccb95978691986cf36fc59a30a6a  qa-viewer/art/models/ferry.glb
+6dacc8c1b134830b5210aa522c2a852501d871ad686c56543c2308ba70335cd4  qa-viewer/art/models/rock_m.glb
+3dd93bc6cfa62869a2dedfa603d22b4063ffcde8b4ebba684b962d0574ddeb79  qa-viewer/art/models/searchlight_tower.glb
+6915df17ce678d97b94b9b70c0c4b2de2a23713573a9c9975cba6f4212e69372  qa-viewer/art/models/shore_cliff.glb
+18abd5c6fa0c0811d4ea2cc88f919ffc98a5281850df3fece063ec5bee4dc7f2  qa-viewer/art/models/shore_village.glb
+
+shore_cliff : 3498 triangles; 3 meshes; 3 materials; XYZ bounds [(-3.0, 3.0), (-0.5799999833106995, 9.69018840789795), (-20.0, 20.0)]
+shore_village : 5664 triangles; 4 meshes; 4 materials; XYZ bounds [(-3.0, 3.0), (-0.5799999833106995, 7.951509952545166), (-20.0, 20.0)]
+PASS: all 32 ordered tile/end/mirror cases match the exact same 17 boundary edges; both banks clear the entire open 40 m transit strip. Mirror each complete side on X, not each successive tile.
+ok   models/shore_cliff  290 KB  3498 tris  [P0]
+
+1 ok, 0 failing, 0 not delivered
+ok   models/shore_village  455 KB  5664 tris  ext: KHR_materials_emissive_strength  [P1]
+
+1 ok, 0 failing, 0 not delivered

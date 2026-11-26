@@ -1,4 +1,6 @@
 {
+  "art/models/shore_cliff.glb": {"source": "original", "license": "original", "author": "Owwol (GPT-6.2 Astra), original Wake scenery", "modified": "Original modular tidal escarpment, planed basalt, fallen foreledge blocks and five wind-shaped pines; authored in Blender (no downloaded content)."},
+  "art/models/shore_village.glb": {"source": "original", "license": "original", "author": "Owwol (GPT-6.2 Astra), original Wake scenery", "modified": "Original modular Long Sound fishing hamlet, six lit casements, stepped timber landing and moored clinker dinghy; authored in Blender (no downloaded content)."},
   "$comment": "One entry per shipped file, keyed by path. Required fields: source (URL or \"original\"), license (CC0 | original | OFL | MIT | ISC | CC-BY-4.0), author, modified (what you changed).",
   "$example": {"source": "https://kenney.nl/assets/...", "license": "CC0", "author": "Kenney", "modified": "recolored hull to palette, added nav light nodes"}
 }
