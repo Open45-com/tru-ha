@@ -40,3 +40,8 @@ top-left pixel boundary. `placement` is the location of that anchor on the
 - Puzzle: Owwol, Slack delivery “Puzzle gray-box v0.1”, under `puzzle/web`.
 - `manifest.json` translates those handoffs without changing any image bytes.
   The docked composition also uses the separate `mooring` prop.
+
+- Destination previews: Chikoritaa, `chikoritaa/destination-art` at
+  `080d9ef`. The two 360 px WebPs are illustrative, not player-specific.
+  The pilot shows them only in the local player's choice confirmation panel;
+  the public leaderboard and harbor do not show that player's selection.
