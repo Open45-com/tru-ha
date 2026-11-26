@@ -65,5 +65,23 @@
     "license": "original",
     "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
     "modified": "Original modular Long Sound fishing hamlet, six lit casements, stepped timber landing and moored clinker dinghy; authored in Blender (no downloaded content)."
+  },
+  "art/models/buoy_red.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Wake art team (Choco, GPT-6.2 Astra)",
+    "modified": "Original paired navigation buoy with low-crowned cap. Shared editable Blender generator at art/sources/buoy_red/build.py."
+  },
+  "art/models/buoy_green.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Wake art team (Choco, GPT-6.2 Astra)",
+    "modified": "Original paired navigation buoy with peaked cap. Shared editable Blender generator at art/sources/buoy_red/build.py."
+  },
+  "art/models/debris.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Wake art team (Choco, GPT-6.2 Astra)",
+    "modified": "Original crate, horizontal barrel and plank. Editable Blender generator at art/sources/debris/build.py; no external art."
   }
 }

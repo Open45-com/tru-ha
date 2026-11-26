@@ -1,0 +1,75 @@
+{
+  "browser": "158.0.8127.0",
+  "viewerBase": "5a08b3e",
+  "params": "lighting=review&labels=off&dressing&withDebris&banks&time=2",
+  "shots": [
+    [
+      "before",
+      "ferry",
+      "&baseline"
+    ],
+    [
+      "after",
+      "ferry",
+      ""
+    ],
+    [
+      "left-approach",
+      "ferry",
+      "&approach"
+    ],
+    [
+      "right-approach",
+      "ferry",
+      "&approach&bankside=right"
+    ],
+    [
+      "buoy_red",
+      "buoy_red",
+      ""
+    ],
+    [
+      "buoy_green",
+      "buoy_green",
+      ""
+    ],
+    [
+      "debris",
+      "debris",
+      ""
+    ]
+  ],
+  "accuracy": "Private scene assembly on exact viewer base, custom arrangement and small buoy point lights; not gameplay or a stock viewer feature",
+  "reports": {
+    "before": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\nrock_m \u00b7 LOADED\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED",
+    "after": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\nrock_m \u00b7 LOADED\nbuoy_red \u00b7 LOADED\nAttach: light\nbuoy_green \u00b7 LOADED\nAttach: light\ndebris \u00b7 LOADED\nAttach: crate, barrel, plank\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED",
+    "left-approach": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\nrock_m \u00b7 LOADED\nbuoy_red \u00b7 LOADED\nAttach: light\nbuoy_green \u00b7 LOADED\nAttach: light\ndebris \u00b7 LOADED\nAttach: crate, barrel, plank\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED",
+    "right-approach": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\nrock_m \u00b7 LOADED\nbuoy_red \u00b7 LOADED\nAttach: light\nbuoy_green \u00b7 LOADED\nAttach: light\ndebris \u00b7 LOADED\nAttach: crate, barrel, plank\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED",
+    "buoy_red": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\nbuoy_red \u00b7 LOADED\nAttach: light\nbuoy_green \u00b7 LOADED\nAttach: light\ndebris \u00b7 LOADED\nAttach: crate, barrel, plank\nrock_m \u00b7 LOADED\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED",
+    "buoy_green": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\nbuoy_green \u00b7 LOADED\nAttach: light\nbuoy_red \u00b7 LOADED\nAttach: light\ndebris \u00b7 LOADED\nAttach: crate, barrel, plank\nrock_m \u00b7 LOADED\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED",
+    "debris": "ferry \u00b7 LOADED\nAttach: nav_red, nav_green, mast_light, wake_origin, smoke_origin\nsearchlight_tower \u00b7 LOADED\nAttach: head, lens\ndebris \u00b7 LOADED\nAttach: crate, barrel, plank\nbuoy_red \u00b7 LOADED\nAttach: light\nbuoy_green \u00b7 LOADED\nAttach: light\nrock_m \u00b7 LOADED\nshore_cliff \u00b7 LOADED\nshore_village \u00b7 LOADED"
+  },
+  "errors": [],
+  "modelHashes": {
+    "shore_cliff.glb": "6915df17ce678d97b94b9b70c0c4b2de2a23713573a9c9975cba6f4212e69372",
+    "shore_village.glb": "18abd5c6fa0c0811d4ea2cc88f919ffc98a5281850df3fece063ec5bee4dc7f2",
+    "rock_m.glb": "6dacc8c1b134830b5210aa522c2a852501d871ad686c56543c2308ba70335cd4",
+    "debris.glb": "b757feaf399b3f01a05cc23035431e47904b09ec4bc1bc308d32804baf52d0bf",
+    "buoy_red.glb": "4a533886c994adc286f515cfd76435c122cfee07361d15cd1dd12261ba9d5350",
+    "ferry.glb": "ee3ca6c55b5558549b76d3e98881a9c43de4ccb95978691986cf36fc59a30a6a",
+    "buoy_green.glb": "7765b04c6a427a1cd0834eb2e7898f78ee4870787eb7c4567ba1d77032110ecd",
+    "searchlight_tower.glb": "3dd93bc6cfa62869a2dedfa603d22b4063ffcde8b4ebba684b962d0574ddeb79"
+  },
+  "pngHashes": {
+    "left-approach.png": "9675d7ae660bc29572c8bba08c2f6d9c603df2e3f157ba8b9035a8c291dc5e8d",
+    "after.png": "62af7da11d01bc23acaa5c34010725aec2d25f4de9c52ec7a28b2a917f313c3c",
+    "debris.png": "62af7da11d01bc23acaa5c34010725aec2d25f4de9c52ec7a28b2a917f313c3c",
+    "right-approach.png": "b08729d39de5aefd5fb69c7331fdecb2f58a363b9befc9ceaae06eb2edbf2e60",
+    "buoy_red_close.png": "25f096bd7ce5244e965ec7b761e47847c7d4824015e8eba91bede0e50a034b1a",
+    "debris_close.png": "a25b52137203a669fb793d9e94dadef81669eafba04b8901d80538d06dbb0376",
+    "buoy_green_close.png": "5d7218fe1be15be49536ab7a07dfc4ad6f5bc77f68c8e73d6ea3080612b118e5",
+    "before.png": "bf8de1ac0d1fcf9f12798aca25e5115648af333ef96d22284c143dba95d8df58",
+    "buoy_red.png": "62af7da11d01bc23acaa5c34010725aec2d25f4de9c52ec7a28b2a917f313c3c",
+    "buoy_green.png": "62af7da11d01bc23acaa5c34010725aec2d25f4de9c52ec7a28b2a917f313c3c"
+  }
+}
