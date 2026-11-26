@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://harbor/web/background.webp" id="1"]
+[ext_resource type="Texture2D" path="res://harbor/web/pier.png" id="2"]
+[ext_resource type="Texture2D" path="res://harbor/web/ferry.png" id="3"]
+
+[ext_resource type="PackedScene" path="res://destinations/lighthouse.tscn" id="lighthouse_scene"]
+[ext_resource type="PackedScene" path="res://destinations/cabin.tscn" id="cabin_scene"]
+
+[node name="HarborOffshore" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(0, 0)
+texture = ExtResource("1")
+centered = false
+
+[node name="Pier" type="Sprite2D" parent="."]
+position = Vector2(806, 192)
+texture = ExtResource("2")
+centered = false
+
+[node name="Ferry" type="Sprite2D" parent="."]
+position = Vector2(460, 166)
+texture = ExtResource("3")
+centered = false
+
+[node name="Lighthouse" parent="." instance=ExtResource("lighthouse_scene")]
+position = Vector2(68, 163)
+scale = Vector2(0.38, 0.38)
+
+[node name="Cabin" parent="." instance=ExtResource("cabin_scene")]
+position = Vector2(976, 185)
+scale = Vector2(0.30, 0.30)

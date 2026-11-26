@@ -16,11 +16,21 @@ function view(id,index){
   leaders.forEach((p,i)=>{p.rank=i && leaders[i-1].score===p.score?leaders[i-1].rank:i+1;});
   return {board,player,light:trace(board,player.faces),leaders:leaders.filter((p,i)=>i<5||p.you),meter:counts(round),cabins:db.rounds.filter(r=>r[id]?.choice==='cabin').length};
 }
-const assets={'/':['index.html','text/html'],'/ui.js':['ui.js','text/javascript'],'/style.css':['style.css','text/css']};
+const assets={'/':['index.html','text/html'],'/ui.js':['ui.js','text/javascript'],'/art.js':['art.js','text/javascript'],'/style.css':['style.css','text/css']};
 const srv=http.createServer((req,res)=>{
   const url=new URL(req.url,'http://localhost');
   if(Object.hasOwn(assets,url.pathname)){
     const [name,type]=assets[url.pathname];res.writeHead(200,{'Content-Type':type+'; charset=utf-8'});return res.end(fs.readFileSync(path.join(__dirname,name)));
+  }
+  const art=url.pathname.match(/^\/art\/(manifest\.json|[a-z0-9][a-z0-9_-]*\.(?:png|webp))$/);
+  if(art && (req.method==='GET'||req.method==='HEAD')){
+    const mime={'.json':'application/json','.png':'image/png','.webp':'image/webp'};
+    fs.readFile(path.join(__dirname,'art',art[1]),(err,data)=>{
+      if(err){res.writeHead(err.code==='ENOENT'?404:500);return res.end();}
+      res.writeHead(200,{'Content-Type':mime[path.extname(art[1])],'Content-Length':data.length});
+      res.end(req.method==='HEAD'?undefined:data);
+    });
+    return;
   }
   if(url.pathname!=='/round'){res.writeHead(404);return res.end();}
   res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');
