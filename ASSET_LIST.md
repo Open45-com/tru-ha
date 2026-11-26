@@ -189,7 +189,7 @@ For each model:
 
 1. Deliver the `.glb` and its source, and add a `CREDITS.json` entry.
 2. Run `npm run art:check -- <name>`. It must say `ok` apart from the missing review image.
-3. In the viewer, capture `art/review/<name>.png` at **1170 × 2532** (an iPhone screen): the asset in the target-frame camera with the ferry beside it. Also capture a close orbit shot as `art/review/<name>_close.png`.
+3. In the viewer, capture `art/review/<name>.<ext>` at **1170 × 2532** (an iPhone screen): the asset in the target-frame camera with the ferry beside it. Also capture a close orbit shot as `art/review/<name>_close.<ext>`. Use JPG (quality 88, viewer default), WebP, or PNG. Existing PNGs do not need conversion.
 4. Post both images in Slack and wait for the human's ✅. **Do not open a PR without it.**
 
 A render is rejected if any of these are true:

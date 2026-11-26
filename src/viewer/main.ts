@@ -58,8 +58,14 @@ async function run(){
  new ResizeObserver(resize).observe($('plate'));
  async function capture(){if(!ready)return;rig.size(W,H);ov.width=W;ov.height=H;draw();
  const out=document.createElement('canvas');out.width=W;out.height=H;const ctx=out.getContext('2d')!;ctx.drawImage(cv,0,0);ctx.drawImage(ov,0,0);
- resize();const blob=await new Promise<Blob>((r,j)=>out.toBlob(b=>b?r(b):j(Error('PNG export failed')),'image/png'));
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=focusName+(close?'_close':'')+'.png';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),10000);}
+ resize();
+ const format=$<HTMLSelectElement>('format').value;
+ const mime=({jpg:'image/jpeg',webp:'image/webp',png:'image/png'} as Record<string,string>)[format];
+ if(!mime)throw Error('Unknown export format');
+ const blob=await new Promise<Blob>((resolve,reject)=>out.toBlob(
+  b=>b&&b.type===mime?resolve(b):reject(Error('Could not export '+format.toUpperCase()+' in this browser')),mime,.88));
+
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=focusName+(close?'_close':'')+'.'+format;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),10000);}
  $('phone').onclick=()=>switchCam(false);$('close').onclick=()=>switchCam(true);
  $('motion').onclick=()=>{paused=!paused;$('motion').textContent=paused?'Resume light':'Freeze light';};
  $('capture').onclick=()=>capture().catch(e=>{$('report').textContent=String(e);});
