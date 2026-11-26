@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wake · Night review room</title><link rel="stylesheet" href="/style.css"><main>
+<section id="plate" aria-label="Live portrait night scene"><canvas id="view"></canvas><canvas id="overlay" aria-hidden="true"></canvas></section>
+<aside><small>FIELD TOOLS <b>/</b> GATE 00</small><h1>Night review room</h1>
+<p class="intro">Inspect the actual model under harbor lights, at its authored scale.</p>
+<label for="asset">Review subject</label><select id="asset"></select>
+<label>Camera</label><div class="row"><button id="phone" aria-pressed="true">Phone frame</button><button id="close" aria-pressed="false">Close orbit</button></div>
+<p class="tip" id="hint">40° field of view · 55° down · waterline at 0 m.</p>
+<div class="row"><button id="motion">Freeze light</button><label class="button" for="file">Load a GLB…</label><input type="file" id="file" accept=".glb"></div>
+<label for="report">Model inspection</label><div id="report" aria-live="polite">Loading scene…</div>
+<button id="capture">Save review PNG <span>↓</span></button><p class="tip">1170 × 2532 · includes placeholder markings</p>
+<details><summary>Review notes</summary><p>Drop a self-contained GLB into the selected slot to inspect it without editing the repository. Use close orbit to drag around the subject; scroll to zoom. Only a human review can approve art.</p></details>
+</aside></main><script type="module" src="/viewer.js"></script></html>
