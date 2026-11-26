@@ -65,5 +65,17 @@
     "license": "original",
     "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
     "modified": "Original modular Long Sound fishing hamlet, six lit casements, stepped timber landing and moored clinker dinghy; authored in Blender (no downloaded content)."
+  },
+  "art/models/dock_start.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
+    "modified": "Original packet pier: timber trestles, painted tide office, parcel winch, weighted crate stack, mooring warps and cast shepherd hooks. Authored in Blender with no external content."
+  },
+  "art/models/dock_finish.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
+    "modified": "Original bonded quay: twin chimney loft, timber cargo doors and hoist, ten warm sashes, copper-roofed annex, granite apron, elm rubbing piles, tire fenders and festoon stays. Authored in Blender with no external content."
   }
 }
