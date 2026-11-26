@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 206 72" role="img" aria-label="Wake">
+<title>WAKE</title>
+<defs><g id="letterforms" fill="none" stroke="currentColor" stroke-width="13.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16 20 54 Q20.7 57 23 54 L34 30 Q35 28 36 30 L46 54 Q47.6 57 48.5 53.5 L57 16 M68 55 82 16 Q82.8 14.2 84 16 L99 55 M73 43 H93 M115 16 V55 M143 16 118 36 144 55 M192 16 H161 V55 H192 M161 35 H185"/></g>
+<mask id="foam"><path fill="white" d="M0 0H206V72H0z"/><path d="M0 48 C18 51 33 52 52 48 S83 40 105 44 S131 51 154 47 S178 40 208 43 Q184 41.7 157 49.4 T106 46.8 T53 50.5 T0 49.5 Z"/></mask>
+<filter id="halo" x="-10%" y="-22%" width="120%" height="144%"><feGaussianBlur stdDeviation="3.1"/></filter></defs>
+<g mask="url(#foam)"><g color="#a8edf5" opacity=".60" filter="url(#halo)"><use href="#letterforms"/></g><g color="#f7fcff"><use href="#letterforms"/></g></g></svg>

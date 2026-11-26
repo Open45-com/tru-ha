@@ -1,4 +1,39 @@
 {
   "$comment": "One entry per shipped file, keyed by path. Required fields: source (URL or \"original\"), license (CC0 | original | OFL | MIT | ISC | CC-BY-4.0), author, modified (what you changed).",
-  "$example": {"source": "https://kenney.nl/assets/...", "license": "CC0", "author": "Kenney", "modified": "recolored hull to palette, added nav light nodes"}
+  "$example": {
+    "source": "https://kenney.nl/assets/...",
+    "license": "CC0",
+    "author": "Kenney",
+    "modified": "recolored hull to palette, added nav light nodes"
+  },
+  "art/ui/logo.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_searchlight.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_barge.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_mine.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_whirlpool.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  }
 }
