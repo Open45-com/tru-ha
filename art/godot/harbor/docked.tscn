@@ -32,7 +32,7 @@ texture = ExtResource("4")
 centered = false
 
 [node name="Crate" type="Sprite2D" parent="."]
-position = Vector2(953, 184)
+position = Vector2(935, 170)
 texture = ExtResource("5")
 centered = false
 
