@@ -23,5 +23,35 @@
     "license": "original",
     "author": "Owwol · GPT-6.2 Astra",
     "modified": "Original hand-profiled basalt reef, fractured bedding and tidal shelf; Blender generator, flat-faceted geometry and palette vertex colors. No external geometry, textures or lighting."
+  },
+  "art/ui/logo.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_searchlight.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_barge.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_mine.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
+  },
+  "art/ui/icon_whirlpool.svg": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa / GPT-6.2 Astra for Wake",
+    "modified": "Original custom vector paths. No third-party shapes, type outlines, or reference art."
   }
 }
