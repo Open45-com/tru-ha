@@ -7,10 +7,11 @@
   },
   "scripts": {
     "art:check": "node tools/art.cjs",
-    "test": "node --test",
+    "test": "node --experimental-strip-types --no-warnings --test src/sim/*.test.ts src/server/*.test.ts tools/*.test.cjs",
     "viewer": "node tools/viewer.cjs",
-    "build": "echo \"Build is set up in Gate 0 (BUILD_PLAN.md section 6)\"",
-    "playtest": "devvit playtest"
+    "build": "node tools/build.cjs",
+    "playtest": "devvit playtest",
+    "dev": "node tools/build.cjs --dev"
   },
   "dependencies": {
     "@devvit/web": "0.15.6",
