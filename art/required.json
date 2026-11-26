@@ -1,0 +1,54 @@
+{
+  "$comment": "Machine-readable copy of ASSET_LIST.md. Change both together. Checked by `npm run art:check`.",
+  "models": {
+    "ferry":            {"priority": "P0", "file": "art/models/ferry.glb",            "minTris": 1500, "maxTris": 5000,  "maxKB": 400, "nodes": ["nav_red", "nav_green", "mast_light", "wake_origin", "smoke_origin"], "materials": ["M_Hull", "M_Cabin", "M_WindowGlow"]},
+    "searchlight_tower":{"priority": "P0", "file": "art/models/searchlight_tower.glb","minTris": 1200, "maxTris": 5000,  "maxKB": 400, "nodes": ["head", "lens"], "materials": ["M_LensGlow"]},
+    "barge":            {"priority": "P0", "file": "art/models/barge.glb",            "minTris": 1500, "maxTris": 6000,  "maxKB": 450, "nodes": ["lamp", "wake_left", "wake_right"], "materials": ["M_LampGlow"]},
+    "mine":             {"priority": "P0", "file": "art/models/mine.glb",             "minTris": 400,  "maxTris": 1500,  "maxKB": 150, "nodes": ["led"], "materials": ["M_LedGlow"]},
+    "rock_s":           {"priority": "P0", "file": "art/models/rock_s.glb",           "minTris": 200,  "maxTris": 900,   "maxKB": 100},
+    "rock_m":           {"priority": "P0", "file": "art/models/rock_m.glb",           "minTris": 300,  "maxTris": 1300,  "maxKB": 120},
+    "rock_l":           {"priority": "P0", "file": "art/models/rock_l.glb",           "minTris": 400,  "maxTris": 1800,  "maxKB": 150},
+    "dock_start":       {"priority": "P0", "file": "art/models/dock_start.glb",       "minTris": 2500, "maxTris": 9000,  "maxKB": 600, "nodes": ["lamp_1", "lamp_2", "lamp_3", "spawn"], "materials": ["M_LampGlow"]},
+    "dock_finish":      {"priority": "P0", "file": "art/models/dock_finish.glb",      "minTris": 3000, "maxTris": 11000, "maxKB": 700, "nodes": ["lamp_1", "lamp_2", "lamp_3", "lamp_4", "string_lights", "finish_line"], "materials": ["M_WindowGlow", "M_LampGlow"]},
+    "shore_cliff":      {"priority": "P0", "file": "art/models/shore_cliff.glb",      "minTris": 1500, "maxTris": 5000,  "maxKB": 400},
+    "shore_village":    {"priority": "P1", "file": "art/models/shore_village.glb",    "minTris": 2500, "maxTris": 7000,  "maxKB": 500, "materials": ["M_WindowGlow"]},
+    "buoy_red":         {"priority": "P1", "file": "art/models/buoy_red.glb",         "minTris": 150,  "maxTris": 700,   "maxKB": 80,  "nodes": ["light"]},
+    "buoy_green":       {"priority": "P1", "file": "art/models/buoy_green.glb",       "minTris": 150,  "maxTris": 700,   "maxKB": 80,  "nodes": ["light"]},
+    "debris":           {"priority": "P1", "file": "art/models/debris.glb",           "minTris": 100,  "maxTris": 1200,  "maxKB": 120, "nodes": ["crate", "barrel", "plank"]},
+    "lighthouse_far":   {"priority": "P1", "file": "art/models/lighthouse_far.glb",   "minTris": 800,  "maxTris": 3500,  "maxKB": 250, "nodes": ["beam_pivot"], "materials": ["M_LampGlow"]},
+    "patrol_boat":      {"priority": "P2", "file": "art/models/patrol_boat.glb",      "minTris": 1500, "maxTris": 5000,  "maxKB": 400, "nodes": ["siren_a", "siren_b", "spot", "wake_origin"]}
+  },
+  "textures": {
+    "water_normal":     {"priority": "P0", "file": "art/textures/water_normal.png",  "maxKB": 700},
+    "foam_noise":       {"priority": "P0", "file": "art/textures/foam_noise.png",    "maxKB": 200},
+    "app_icon":         {"priority": "P1", "file": "art/textures/app_icon.png",      "maxKB": 400},
+    "cover":            {"priority": "P1", "file": "art/textures/cover.jpg",         "maxKB": 400}
+  },
+  "ui": {
+    "logo":             {"priority": "P0", "file": "art/ui/logo.svg",                "maxKB": 40},
+    "icon_searchlight": {"priority": "P0", "file": "art/ui/icon_searchlight.svg",    "maxKB": 8},
+    "icon_barge":       {"priority": "P0", "file": "art/ui/icon_barge.svg",          "maxKB": 8},
+    "icon_mine":        {"priority": "P0", "file": "art/ui/icon_mine.svg",           "maxKB": 8},
+    "icon_whirlpool":   {"priority": "P1", "file": "art/ui/icon_whirlpool.svg",      "maxKB": 8},
+    "icon_skull":       {"priority": "P0", "file": "art/ui/icon_skull.svg",          "maxKB": 8},
+    "icon_clock":       {"priority": "P0", "file": "art/ui/icon_clock.svg",          "maxKB": 8},
+    "icon_crown":       {"priority": "P0", "file": "art/ui/icon_crown.svg",          "maxKB": 8},
+    "icon_retry":       {"priority": "P0", "file": "art/ui/icon_retry.svg",          "maxKB": 8},
+    "font_display":     {"priority": "P0", "file": "art/ui/fonts/Rubik-Variable.woff2", "maxKB": 250}
+  },
+  "audio": {
+    "engine_loop":      {"priority": "P0", "file": "art/audio/engine_loop.mp3",      "maxKB": 120},
+    "engine_cut":       {"priority": "P0", "file": "art/audio/engine_cut.mp3",       "maxKB": 30},
+    "caught_alarm":     {"priority": "P0", "file": "art/audio/caught_alarm.mp3",     "maxKB": 60},
+    "crash_sink":       {"priority": "P0", "file": "art/audio/crash_sink.mp3",       "maxKB": 60},
+    "mine_blast":       {"priority": "P0", "file": "art/audio/mine_blast.mp3",       "maxKB": 60},
+    "finish_bell":      {"priority": "P0", "file": "art/audio/finish_bell.mp3",      "maxKB": 60},
+    "ui_tap":           {"priority": "P0", "file": "art/audio/ui_tap.mp3",           "maxKB": 15},
+    "harbor_ambience":  {"priority": "P1", "file": "art/audio/harbor_ambience.mp3",  "maxKB": 400},
+    "near_miss":        {"priority": "P1", "file": "art/audio/near_miss.mp3",        "maxKB": 30},
+    "searchlight_hum":  {"priority": "P1", "file": "art/audio/searchlight_hum.mp3",  "maxKB": 80},
+    "barge_horn":       {"priority": "P1", "file": "art/audio/barge_horn.mp3",       "maxKB": 60},
+    "place_trap":       {"priority": "P1", "file": "art/audio/place_trap.mp3",       "maxKB": 30},
+    "music_loop":       {"priority": "P2", "file": "art/audio/music_loop.mp3",       "maxKB": 1500}
+  }
+}

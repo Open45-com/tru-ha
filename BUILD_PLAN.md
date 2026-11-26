@@ -1,54 +1,154 @@
-# Until Tomorrow
+# Wake — Build plan
 
-Draft build plan, November 26, 2026. Assumes a small team starting from an empty project. Target submission December 7 IST.
+How the game is built, who owns what, and the contracts that let agents work in parallel without breaking each other. Design is in [GAME_PLAN.md](GAME_PLAN.md) and art in [ASSET_LIST.md](ASSET_LIST.md).
 
-## A round in one minute
+Deadline: **Dec 8, 6 p.m. Pacific (Dec 9, 7:30 a.m. IST).** Ship gates are listed below. There are no day-by-day dates, because the gates are what matter.
 
-The Reddit post opens on a dark harbor. Tap a mirror and the beam moves immediately. Guide the beam into a lantern, see your move count, then choose where to hang the light. A cabin light stays on your personal postcard for the week. A lighthouse light helps bring the ferry into port. Tomorrow's harbor reflects the collective outcome. Both outcomes lead to a fresh playable puzzle.
+## 1. Stack
 
-Use the result screen for the daily leaderboard and beacon tally. Show the live tally when choosing too. An optional trip to the post's comments lets people discuss the decision or compare solves.
-
-## Rules to implement
-
-- Give everyone in a subreddit the same board and starting orientations for the day. Every tap rotates a mirror one step. Show the beam path immediately, using shape and brightness as well as color. Detect beam loops.
-- Rank fewest rotations on the first completed ranked attempt. Persist the in-progress attempt across reloads. On the server, validate the moves against the day's board and freeze the first accepted solve. Share ranks on ties. Show the leaders and the player's own rank.
-- Award one lantern per signed-in account per day. A player may commit it once. Display the cost before confirmation. Keep the individual's choice off the leaderboard. Treat the cabin as a private postcard.
-- The live meter shows contributions and total committed choices. At close the ferry docks if at least one player committed and at least half contributed. A tie docks the ferry. With no choices, the ferry waits and a new board opens. Before close say “on course” or “short by one” as appropriate.
-- Keep a practice replay available on old posts and for visitors. Replay never changes scores, lanterns, or island history. Link old posts to the current challenge.
-
-## Technology and assets
-
-Start from the Devvit Web React starter. Use TypeScript for the grid simulator, React buttons for mirror input and accessibility, Canvas for the light path, and CSS for simple motion. Store daily state and player records in Devvit Redis. Commit the ballot and counts atomically. Serve snapshots to the live meter and reconcile after reconnect. Freeze each day's result at 00:00 UTC and make scheduled rollover safe to retry. Use a stable day key so opening an old post cannot start a second round.
-
-Paint one layered harbor in Krita. Use ImageGen optionally for an original art-direction reference. Maintain a fixed camera and anchors. Keep the editable master and a record of sources and rights. Export a compressed WebP background and cropped transparent props. Draw text, controls and beam geometry at runtime.
-
-| Art delivery | Contents | Acceptance check |
-| --- | --- | --- |
-| Two phone-sized keyframes | Same harbor with ferry offshore and docked, plus a cabin lantern close-up | A viewer can identify the consequence with captions hidden |
-| Reusable scene | Sea and shore, pier, lighthouse, cabin, ferry and crate props | Dock the ferry or unload cargo without repainting the background |
-| Playable pieces | Mirror mount and face, beam source, empty and charged lantern, lighthouse glow | Mirror direction stays readable under a thumb and with motion reduced |
-| Final capture | Cover, gameplay stills and optional sub-minute video from the build | Show a real move, real choice and clearly labeled prior-day reveal |
-
-Aim for 1–2 MB of initial scene art as an internal budget. Measure on a real phone. Cut background texture or extra animations before sacrificing beam contrast or touch-target size.
-
-## Delivery calendar
-
-| Dates (2026) | Deliverable and exit condition |
+| Layer | Choice |
 | --- | --- |
-| Nov 26–27 | Gray-box one round in a Reddit test post. Produce the two keyframes. Give five people the phone with no coaching. Target four who can finish and explain both lantern choices. |
-| Nov 28–30 | Integrate approved art. Finish first-solve scoring, the private choice, persistent cabin and live aggregate. With two accounts, verify shared ranks, tally updates, refresh recovery and duplicate tap handling. |
-| Dec 1–3 | Author three opening boards. Use an offline solver to check solvability, par and trivial shortcuts. Prepare enough validated layouts for every day through judging, with a tested fallback. Make yesterday's outcome visible. Test empty days, ties, late submissions, replay isolation and duplicate rollover. |
-| Dec 4–6 | Observe a real overnight rollover on Reddit. Check mobile touch, loading, logged-out practice, and old demo links. Invite initial testers back without revealing the result and record whether they want to see the ferry. Fix the most common confusion. |
-| Dec 7 | Upload the final build. Complete Devpost, verify all links from a second account and submit. Keep the app free and accessible through judging. |
+| Platform | Devvit Web (`@devvit/web`), custom post, `height: tall` |
+| Client | TypeScript + **Three.js** (WebGL2), postprocessing with bloom. HTML/CSS overlay for UI. Bundled with esbuild. |
+| Server | Hono on Devvit's Node server, Devvit Redis, scheduler, Reddit API (comments, posts) |
+| Shared | `src/sim/`: deterministic simulation in plain TypeScript, imported by **both** client and server |
+| Tests | `node --test` (via `tsx`), with golden replay files |
 
-If behind, cut additional scene art, audio and custom transitions first. Preserve the daily puzzle, private choice, cabin payoff, working meter, leaderboard and next-day result.
+## 2. The one rule: the sim is deterministic
 
-## Submission
+The server never trusts a time or a death sent by the client. The client sends its **inputs**, and the server **replays** them through the same sim. That gives us cheat-proof leaderboards, the "prove your trap" check, kill attribution, ghost wakes and replays, all from the same input list.
 
-Submit an English description, Devvit listing URL, test subreddit URL and direct playable post URL. Include a detailed root README explaining play and testing. Use a public test subreddit under 200 members. Upload and playtest the app. Broad app publication is unnecessary. If recording a video, aim for 45–50 seconds. Show the beam, the two destinations for the lantern, the live result screen, and an actual archived next-day outcome. The official deadline is Dec 8 at 6 p.m. Pacific, Dec 9 at 7:30 a.m. IST.
+The sim therefore must:
+- run at a fixed **60 ticks per second**, independent of frame rate
+- use **integer math only**. Positions are in 1/10 m units (the course is 400 × 2400). Speeds and accelerations are in sub-units per tick, stored as integers scaled ×256.
+- **never call** `Math.sin`, `Math.cos`, `Math.atan2`, `Math.sqrt` or `Math.random`. Use the precomputed integer sine table in `src/sim/trig.ts` (1° steps, values ×16384) and an integer square root. Randomness comes from a seeded `mulberry32`.
+- have no dependence on time, the DOM or Three.js. The renderer only **reads** sim state and interpolates between ticks.
 
-## Review and remaining uncertainty
+**Golden test:** `src/sim/__golden__/*.json` holds courses plus input logs and their expected results. CI replays them, and any difference fails.
 
-Claude Opus 5.5 agreed with the stack, external art pipeline, early Reddit deployment and three authored pilot days. Its review prompted server-side score validation, solver-checked par, isolated replay and a mobile art budget. Opus preferred a low-turnout fallback. This draft keeps the public half-of-committed rule for every nonempty round so the promise to the player stays consistent. The core untested assumption is whether hanging a lantern at home feels valuable enough to make the choice interesting.
+## 3. Repository layout and ownership
 
-References: [Official rules](https://redditgameofday2026.devpost.com/rules), [event brief](https://redditgameofday2026.devpost.com/), [Devvit quickstart](https://developers.reddit.com/docs/quickstart), [Redis](https://developers.reddit.com/docs/capabilities/server/redis), [Scheduler](https://developers.reddit.com/docs/capabilities/server/scheduler), [Godot web exports](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_web.html).
+```
+src/sim/        shared deterministic sim            → Code agent 1 (engine)
+src/client/     Three.js renderer, input, UI, audio → Code agent 2 (client)
+src/viewer/     asset viewer for art review         → Code agent 2 (first task)
+src/server/     Devvit routes, Redis, replay check  → Code agent 3 (server)
+art/            models, textures, ui, audio         → Art agents A, B, C (ASSET_LIST §8)
+tools/          build and check scripts             → whoever needs it; keep small
+```
+
+Only touch files you own. Change shared contracts (section 4) only through a PR labeled `contract` that every affected owner approves.
+
+## 4. Contracts (freeze these first)
+
+### Sim API (`src/sim/index.ts`)
+
+```ts
+export type Input = { engine: 0 | 1; steer: number };   // steer: integer -8..8
+export type InputLog = [ticks: number, engine: 0|1, steer: number][]; // run-length encoded
+export type Hazard =
+  | { id: string; kind: 'rock'; x: number; y: number; size: 's'|'m'|'l' }
+  | { id: string; kind: 'searchlight'; x: number; y: number; angle: number }   // degrees, 0 = facing -y
+  | { id: string; kind: 'barge'; x: number; y: number; dir: 1 | -1 }
+  | { id: string; kind: 'mine'; x: number; y: number }
+  | { id: string; kind: 'whirlpool'; x: number; y: number };
+export type Course = { day: string; version: number; seed: number; hazards: Hazard[]; patrol?: number[][] };
+export type Event =
+  | { type: 'finish'; tick: number }
+  | { type: 'death'; tick: number; cause: 'bank'|'rock'|'caught'|'barge'|'mine'|'whirlpool'; hazardId?: string }
+  | { type: 'nearMiss'; tick: number; hazardId: string };
+
+export function createRun(course: Course): RunState;
+export function step(state: RunState, input: Input): Event[];   // advances exactly one tick
+export function replay(course: Course, log: InputLog, maxTicks = 3600): { end: Event; ticks: number; path: number[] }; // path: x,y every 6 ticks
+export function validatePlacement(course: Course, h: Hazard): string | null; // null = OK, otherwise a reason
+export function hazardStateAt(h: Hazard, tick: number): { x: number; y: number; angle?: number }; // for rendering
+```
+
+Coordinates use sim units (1/10 m), with x in 0..400 and y in 0..2400. y = 0 is the top, at the finish. The renderer maps sim (x, y) to Three.js (x/10 − 20, 0, y/10 − 240), so −Z is up the course.
+
+### HTTP API (Hono on the Devvit server)
+
+| Route | Request | Response |
+| --- | --- | --- |
+| `GET /api/state` | — | `{ day, course, me: { username?, best?, rank?, trap?: {hazard, victims, status: 'pending'|'live'|'washed'} }, boards: { fastest[], deadliest[] }, ghosts: InputLog[] (top 5), stats: { runs, sinks, traps } }` |
+| `POST /api/run` | `{ day, version, log }` | Server replays against that version. `{ end, ticks, newBest, rank }`. A death counts its victim for `hazardId`. |
+| `POST /api/trap` | `{ day, version, hazard }` | Calls `validatePlacement`. Stores the trap as pending. Returns `{ proofVersion }`: the course with the pending trap added. |
+| `POST /api/trap/prove` | `{ day, proofVersion, log }` | Replays the run. If it finished, the trap goes live (the cap rule applies). Returns `{ status }`. |
+| `POST /api/trap/cancel` | `{ day }` | Removes the pending trap. |
+| `POST /internal/scheduler/daily` | cron `0 0 * * *` | Freezes yesterday, builds today's course (template plus Legends) and submits today's post. |
+| `POST /internal/scheduler/report` | cron `5 0 * * *` | Posts the trap report comment on yesterday's post. |
+| `POST /internal/menu/post-create` | moderator menu | Creates today's post manually, for testing. |
+
+Rate limit: 1 run submission per user per 2 s, and only for runs of at least 3 s of ticks.
+
+### Redis keys (per installation)
+
+```
+wake:{day}:course            JSON Course (live hazards), version incremented on every change
+wake:{day}:course:v{n}       frozen snapshot per version (TTL 3 days) so late replays validate
+wake:{day}:best              ZSET user -> best ticks (lower is better)
+wake:{day}:victims:{hazId}   SET of user ids sunk by that hazard
+wake:{day}:sinks             HASH hazId -> total sinks
+wake:{day}:trap:{user}       JSON {hazard, status, proofVersion}
+wake:{day}:ghosts            JSON top-5 InputLogs (refreshed when `best` changes)
+wake:{day}:stats             HASH runs, sinks, traps
+wake:post:{day}              post id
+```
+
+Updating the course uses optimistic concurrency: watch `course`, append, increment the version and write the snapshot, retrying up to 3 times.
+
+### Asset manifest
+
+The client loads models by name from `art/models/<name>.glb` and finds attach nodes and glow materials by the names in `art/required.json`. If a model is not delivered yet, the client shows a **clearly marked placeholder**: a magenta wireframe box with the asset name. It never shows a fake final asset.
+
+## 5. Rendering spec (Code agent 2)
+
+The art direction is the target frame in ASSET_LIST §2. The renderer has to deliver it:
+
+- **Camera:** perspective, 40° FOV, pitched 55° down. It follows the ferry with damping, keeping the ferry at 70% of screen height. Visible width about 40 m. It shakes for 150 ms at 0.15 m on death.
+- **Sky and fog:** gradient sky dome from `#070b16` to `#1b2a44` with sparse stars. `FogExp2` color `#1b2a44`, density 0.018.
+- **Lights:** hemisphere light at 0.15 intensity, plus a cool moon directional light (`#8fb4ff`, 0.35, no shadows). A real `PointLight` at each lamp node (with a cap of 12 active point lights, nearest first) and a `SpotLight` per searchlight.
+- **Searchlight cone:** an additive cone mesh with a fresnel and distance fade (shader), plus a bright oval on the water where the cone lands. When a ferry is caught, it lerps to `#ff4d2e` over 150 ms.
+- **Water:** a custom shader plane. Base `#0a1424`, tinted toward `#1f4a6e` by nearby lights. Two scrolling samples of `water_normal`. Specular highlights from moon and spot lights (long glitter streaks). Foam from `foam_noise` near hulls and banks.
+- **Wake:** a ribbon trail from `wake_origin`, 3 s long, getting wider and fading over its length, plus foam particles. Ghost wakes use the same ribbon at 25% opacity in cyan.
+- **Post-processing:** `UnrealBloomPass` (strength 0.9, radius 0.6, threshold 0.75), ACES tone mapping, a subtle vignette and slight film grain.
+- **Detection ring:** a ring decal around the ferry on the water. It fills clockwise and goes white → amber → red as the meter rises.
+- **Performance budget:** 60 fps on a mid-range phone from 2022. Pixel ratio capped at 2. Under 80 draw calls (instance rocks and debris). Under 150k triangles visible. Initial download under 6 MB gzipped. Lower pixel ratio and bloom on its own if frame time stays over 20 ms for 2 s.
+- **Juice:** slow motion on near misses (time scale 0.5 for 0.25 s, only in the renderer, since the sim keeps its tick rate), a splash and debris on death, the dock string lights turning on one by one at the finish, and a haptic tap (`navigator.vibrate(20)`) on death where supported.
+
+## 6. Work plan by gate
+
+Each gate ends with a **human playtest on a real phone** before the next gate starts.
+
+### Gate 0 — Does it feel good? (blocks everything else)
+- Agent 1: sim with ferry physics, bank, rock and searchlight, plus `replay` and golden tests.
+- Agent 2: Three.js scene with placeholders, input, camera, water shader v1, searchlight cone, death and instant retry. Plus the **asset viewer** (`npm run viewer`) for the art agents.
+- Agent 3: Devvit scaffold, `GET /api/state` with a fixed course, menu post creation, and a deploy to the private test subreddit.
+- Art: `ferry`, `searchlight_tower`, `rock_m` through the review gate.
+- **Pass:** 5 people get a phone with no instructions. At least 3 retry without being asked, and they can say what the engine button does.
+
+### Gate 1 — The core loop works on Reddit
+- Agent 1: barge, mine, `validatePlacement`, near-miss events, the 12 base templates and a solvability bot (a greedy search over inputs that must finish every template).
+- Agent 2: all screens from GAME_PLAN §3, placement UI with sweep and path previews, HUD, audio, haptics.
+- Agent 3: run submission and replay check, the trap flow (pending → prove → live), the 40-trap cap, both leaderboards, distinct-victim counts, the daily scheduler with Legends.
+- Art: all P0 assets.
+- **Pass:** two accounts on one post. A trap placed by A kills B, and A's victim count goes up. A real midnight rollover creates the next post with Legends.
+
+### Gate 2 — Social and polish
+- Ghost wakes, the trap report comment, whirlpool, P1 art, the full rendering spec in §5, performance work.
+- **Pass:** testers come back the next day without a reminder and check their trap.
+
+### Gate 3 — Stretch (only if Gate 2 passed early)
+- Live ghosts (realtime), patrol boat, community course posts, flair.
+
+### Ship
+- `app_icon`, `cover`, and a 45-second video showing a run, a death by a named trap, placing and proving a trap, and the leaderboards.
+- Root README explains play and testing. Devpost submission with: an English description, the Devvit app listing URL, a public test subreddit under 200 members, and the direct post URL. Check every link from a second account. Keep the app free and installed through judging.
+
+## 7. Definition of done for any PR
+
+- `npm test` and `npm run art:check` pass.
+- For gameplay changes: a phone screenshot or short clip in the PR.
+- For sim changes: the golden replays are updated on purpose, with the reason in the PR description.
+- No new dependency without a note in the PR. No assets outside `art/`.

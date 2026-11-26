@@ -1,28 +1,32 @@
-# Until Tomorrow
+# Wake
 
-Every night a ferry waits outside a dark harbor. In this daily Reddit puzzle, you rotate mirrors to steer a beam into a lantern. You earn one light. Hang it outside your cabin and it stays on your private postcard for the week. Send it to the lighthouse and it helps guide the ferry home. At dawn, everyone sees what the subreddit chose.
+**Steer a ferry through a night harbor full of searchlights and traps. Then leave a trap of your own for the next player.**
 
-## How a round works
+Wake is a daily Reddit game built on Devvit. Each post is one day's course. A run takes 20–40 seconds, and retrying is instant. When you finish, you place one hazard on the course: a searchlight, a barge or a mine. It only goes live after you beat the course with it in place. From then on, it counts every player it sinks. At midnight UTC the deadliest traps carry over into tomorrow's post as Legends.
 
-1. Open today's post. Everyone in the subreddit starts with the same mirror puzzle.
-2. Tap a mirror to rotate it and watch the beam change direction. Light the lantern in as few rotations as you can. Your first solve sets your daily leaderboard score.
-3. Check the live harbor meter and choose a destination for your lantern. The meter shows the group total. Your personal choice stays off the leaderboard.
-4. Come back for the next post. If at least half the players who spent a lantern sent theirs to the lighthouse, the ferry docks. Otherwise it waits offshore. Either way, a fresh puzzle opens.
+> Status: **redesign in progress.** The previous mirror-puzzle prototype ("Until Tomorrow") has been retired. Its code and art are still available in git history before this branch.
 
-You can play alone. Other players can join throughout the day. The fun of a crowded post is that someone can beat your move count while someone else's lantern can change tomorrow's harbor.
+## Documents
 
-## Project documents
-
-| Document | Use it for |
+| Document | For |
 | --- | --- |
-| [Game plan](GAME_PLAN.md) | A complete example round, the player experience, scoring, the community decision and what carries into tomorrow |
-| [Build plan](BUILD_PLAN.md) | Implementation, dated milestones, playtests and the hackathon submission checklist |
-| [Asset checklist](GODOT_ASSET_LIST.md) | Harbor art, mirror and lantern pieces, Godot scene composition, exports and mobile checks |
+| [GAME_PLAN.md](GAME_PLAN.md) | Rules, controls, tuning numbers, screens, scoring, social features |
+| [BUILD_PLAN.md](BUILD_PLAN.md) | Stack, the deterministic sim, API and Redis contracts, ownership, gates |
+| [ASSET_LIST.md](ASSET_LIST.md) | **Art and audio spec**: target look, every model with sizes and attach points, review gate |
+| [art/required.json](art/required.json) | Machine-readable asset list checked by `npm run art:check` |
 
-## Play the two-board pilot
+## For agents
 
-Run [Play.cmd](pilot/Play.cmd) on Windows with Node.js installed, then open the local address printed in the terminal. Play First Crossing to learn the mirrors and Shoals for the harder route. Each board awards one lantern per browser profile. Open a separate browser profile on the same computer to try a second keeper. The two sessions share a leaderboard and contribution meter for each crossing.
+1. Read the document for your role in full (the table above), then `BUILD_PLAN.md` §3 to see which files you own.
+2. Only touch the files you own. To change a contract, open a PR labeled `contract`.
+3. Art is accepted only through the review gate in `ASSET_LIST.md` §7.
 
-The pilot saves its state locally. Both boards are available immediately for testing. Reddit accounts, the daily cutoff and the next-day ferry reveal are planned for the Devvit build.
+## Commands
 
-See [Devvit playtest build](devvit/README.md) for the private Reddit setup and UTC ferry behavior.
+```sh
+npm ci
+npm run art:check        # asset delivery, budgets, attach nodes, licenses
+npm test                 # sim golden replays and server tests (once they exist)
+npm run viewer           # asset viewer in the game's lighting (built in Gate 0)
+npm run build            # Devvit client and server bundles (built in Gate 0)
+```

@@ -1,6 +1,0 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="PackedScene" path="res://puzzle/mirror_mount.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://puzzle/mirror_face.tscn" id="2"]
-[node name="Mirror" type="Node2D"]
-[node name="Mount" parent="." instance=ExtResource("1")]
-[node name="Face" parent="." instance=ExtResource("2")]

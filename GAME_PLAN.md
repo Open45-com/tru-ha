@@ -1,53 +1,111 @@
-# Until Tomorrow — game plan
+# Wake — Game plan
 
-## What the player is trying to do
+Every number here is the starting tuning. The engine agent owns tuning changes and records them here.
 
-You live on an island whose lighthouse depends on the people in today's Reddit post. Your immediate goal is to solve a small visual puzzle. Success gives you something worth keeping, a lantern for your cabin. Giving it away could change what everyone sees tomorrow. The puzzle rewards skill, and the final choice asks how much you trust the other players.
+## 1. The pitch
 
-## One evening at the harbor
+**Steer a ferry through a night harbor full of searchlights and traps. Then leave a trap of your own for the next player.**
 
-Imagine opening the post to find a beam from the pier spilling into the sea. You can see the empty lantern above the dock. Tap a mirror and the beam turns toward a second mirror. Turn that one and the beam catches the lantern. Its empty glass fills with light. The beam updates after each tap so you can trace where it went wrong.
+Each Reddit post is one day's course. A run takes 20–40 seconds, and retrying is instant. When you finish, you place one hazard on the course, but it only goes live after you beat the course with it in place. From then on, your hazard counts how many players it sinks. The subreddit builds a harder course all day, and at midnight UTC the deadliest traps move into tomorrow's post.
 
-Suppose you finish in five rotations. Your result reads **5 rotations · tied for second**. You see the leading score and your place. The lantern is yours regardless of rank.
+**Why it's fun:**
+- **Running** is a tense stealth race: cut the engine and drift through a searchlight's edge, or gun it across open water.
+- **Placing a trap** is a mind game: where will other players go? Their wakes give it away.
+- **Coming back** is the hook: "my mine has sunk 37 ferries."
 
-Now the meter reads **5 lighthouse lights from 11 choices**. Tap either destination to see what it means before confirming:
+**Why it belongs on Reddit:** every player both plays the level and changes it. The course at 9 p.m. isn't the course from 9 a.m. People argue in the comments about routes and brag about the most-hated trap.
 
-- **Hang it at my cabin.** Your window glows on your private weekly postcard. The meter becomes 5 of 12 and the ferry is still waiting.
-- **Send it to the lighthouse.** Your lantern joins the beacon. The meter becomes 6 of 12 and the ferry is on course to dock. Your cabin has one fewer light than it could have had.
+## 2. Moment-to-moment play
 
-The tally can change again as others arrive. If the day ends at 6 of 12, tomorrow's post shows the ferry tied up at the pier with cargo on shore. If it ends at 5 of 12, the berth is empty and the ferry is visible offshore. Yesterday's result is readable even to someone joining for the first time. The counts above illustrate a round.
+### Controls (phone first)
 
-## Rules for the daily post
-
-| Topic | Player-facing rule |
+| Input | Effect |
 | --- | --- |
-| Puzzle | Each subreddit gets one board per day. Players share the same starting layout. Every tap turns one mirror one step and counts as one move. |
-| Leaderboard | Fewest rotations on the first completed ranked solve wins. Equal scores share rank. Refreshing resumes the attempt. Show the leaders and the player's own rank. |
-| Lantern | Each signed-in player can earn and commit one lantern per day. The destination is final after confirmation. Keeping or giving it earns the same puzzle rank. |
-| Meter | Count only confirmed choices. The display shows how many lanterns went to the lighthouse and how many were spent in total. |
-| Dawn | Voting closes at 00:00 UTC (5:30 a.m. IST). At least half of a nonempty tally brings the ferry in. An empty day leaves it offshore. Both outcomes open the next puzzle. |
-| Replay | Visitors can try a practice round. Old posts preserve their outcome and offer replay. Practice has no effect on scores or lanterns. |
+| Finger down anywhere | **Engine on.** The ferry speeds up. |
+| Finger up | **Engine off.** The ferry slows to a quiet drift. |
+| Drag left or right while holding | Steer. Horizontal offset from where the finger first touched sets the target heading: 60 px = full lock. |
+| Keyboard | ↑ or W = engine, ←/→ or A/D = steer. |
 
-## What makes it a Reddit game
+The engine is the core decision. **A searchlight spots a ferry three times faster when its engine is running.**
 
-Each player gets an immediate personal result. The community gets a second, shared result at dawn. The comments give players room to compare mirror routes, make a case for lighting the harbor, or check back when the tally is close. A player can take part in the decision without revealing which way they went.
+### The ferry
 
-## Hackathon edition
+| Property | Value |
+| --- | --- |
+| Size | 8 m × 3 m. Hitbox is 3 circles of radius 1.4 m at −2.6, 0 and +2.6 m along the heading. |
+| Top speed | 12 m/s (engine on) |
+| Acceleration | 3 m/s² |
+| Coasting | slows at 1.2 m/s² down to a 1.8 m/s drift, and never stops |
+| Heading | within ±40° of straight up the course, turning at 120°/s toward the target |
 
-**Current pilot scope:** One game with two playable boards, First Crossing and Shoals. Use this pair to test the mirror puzzle and lantern decision before adding another board, dilemma or game. The three-board introductory sequence below is the expansion target after testing.
+### Ways to die (each restarts the run)
 
-**The moral question.** “I earned this light. Do I keep it and trust someone else to help, or give it away when the ferry could still miss port?” Both choices are legitimate. Players see the live count before committing, so four people who solve the same puzzle can face different decisions as the day unfolds. The game awards leaderboard positions for puzzle skill alone.
+| Cause | Rule |
+| --- | --- |
+| Bank | Any hitbox circle touches x < 0 or x > 40 m. |
+| Rock | A hitbox circle overlaps a rock's circle (radius 2.0, 3.2 or 4.8 m). |
+| Searchlight | **Detection meter** (0–45). Each tick with any hull circle center inside a cone: +3 if the engine is on, +1 if it's off. Each tick outside all cones: −2. **Caught at 45.** That's 0.25 s in the light with the engine on, or 0.75 s drifting. |
+| Barge | Overlaps the barge's box (14 × 5 m). |
+| Mine | A hitbox circle comes within 1.0 m of the mine center. |
+| Whirlpool | Within 8 m, a pull toward the center of 2.4 m/s². Touching the 1.4 m core kills you. At full throttle you can escape. |
 
-**The Beast Games influence.** The idea we borrow is the moment of temptation after earning a prize. Each player gets a guaranteed personal reward and one chance to sacrifice it for an uncertain group outcome. Everyone can return the next day, whichever choice they made. The harbor, characters, rewards and visual identity are original to Until Tomorrow.
+When you are caught, the cone turns red, the alarm plays and the ferry sinks over 0.6 s. Then the **"Sunk by u/name's mine"** card appears, and **one tap restarts**. From death to steering again takes under 1.5 s. This is the most important feel requirement in the game.
 
-**How much changes daily.** The submission plan calls for fresh mirror layouts and a visible consequence from yesterday. It specifies one recurring moral choice. Earlier ideas included powering the greenhouse versus bringing the ferry home and a longer save-or-lose-the-island story. Those are candidates for a future set of dilemmas. Writing distinct daily questions and connecting their consequences would be additional design work. The first multi-day playtest should check whether the lantern choice still feels worth discussing on the second day.
+**Near miss:** if the cone edge passes within 0.5 m of the hull without catching you, the game slows to 50% for 0.25 s, plays a whoosh and the camera tightens briefly.
 
-Build one harbor, a private cabin postcard, one mirror mechanic, three hand-authored introductory boards and a supply of validated daily layouts through judging. Include the live meter, daily ranks and an archived round so a judge can see yesterday's consequence immediately. The visual handoff matters most at three moments: the beam turns, the lantern fills, and the ferry changes position.
+### Course
 
-## What the first playtest should answer
+- 40 m wide and 240 m long. You start at the bottom dock and finish when the bow crosses the finish line, 10 m from the top.
+- **Base layout** for each day comes from the date seed: 3 rocks and 1 searchlight from a hand-checked template set (12 templates, see BUILD_PLAN), plus yesterday's 3 deadliest player hazards, labeled "Legend".
+- Up to **40 live player hazards**. When a 41st goes live, the hazard with the fewest distinct victims is removed (oldest first on ties), and its owner sees "washed away".
 
-- Can four of five phone testers finish a rough round and explain both lantern choices without coaching?
-- Does keeping a lantern feel valuable? Watch what people choose, then ask what they gave up. If everyone chooses instantly, find out why.
-- After an actual overnight rollover, can returning players tell what happened by looking at the pier? Record whether anyone comes back on their own to find out.
+### Hazards players can place
 
-See the [build schedule and submission checklist](BUILD_PLAN.md) and the [art production inventory](GODOT_ASSET_LIST.md).
+| Hazard | Parameters the placer sets | Behavior |
+| --- | --- | --- |
+| Searchlight | Position, center angle (drag) | Sweeps ±45° around the center angle at 48°/s, back and forth. Cone 22 m long, half-angle 12°. Islet blocks movement (radius 2.2 m). |
+| Barge | Position (lane y), starting direction | Moves along x at 4.8 m/s, bouncing between the banks. |
+| Mine | Position | Static. Its LED blinks faster when a ferry is within 6 m (visual only). |
+| Whirlpool (P1) | Position | Static pull zone. |
+
+Placement rules: y between 20 m and 220 m. Center at least 7 m from every other hazard and 10 m from the start or finish line. Must sit inside the water.
+
+## 3. The loop around a run
+
+1. **Title screen**: the live course drifts behind a glass panel. It shows today's stats (runs, sinks, best time, live traps) and buttons for **Play**, **Leaderboards** and **How to play**, which is 3 animated cards.
+2. **Run**: the HUD shows the timer, the detection meter as a ring around the ferry that fills and turns red, and a small course progress bar.
+3. **Death**: the "Sunk by u/name's \<hazard\>" card, with that hazard's victim count ticking up live. Tap to retry.
+4. **Finish**: your time, your rank and your personal best. The big button is **"Leave your trap"**, and there's a smaller "Run again".
+5. **Placement**: a top-down view of the whole course with heatmap wakes from the top 5 runs. Pick a hazard, drag it into place, see a preview of its sweep or path, and confirm. One trap per player per day.
+6. **Prove it**: you run the course with your trap pending, which only you can see. Unlimited attempts. When you finish, the trap goes live with a splash and the message "Your mine is live. Victims: 0".
+7. **Comeback**: the title screen and finish card always show **your trap's victims today**. The next day's post shows whether your trap became a Legend.
+
+Logged-out players can run the course and see leaderboards. Saving a time or placing a trap asks them to log in.
+
+## 4. Scoring and leaderboards (per day)
+
+| Board | Ranked by | Notes |
+| --- | --- | --- |
+| **Fastest** | Best finish time (ticks → seconds, 2 decimals) | Server-verified replays only. Shows top 10 plus your rank. |
+| **Deadliest** | **Distinct players** your hazard sank | The same player dying 50 times counts once, so friends can't farm kills. Total sinks are shown as a secondary number. |
+
+Legends (yesterday's top 3 traps) show their owner's name and their record from the previous day.
+
+## 5. Social features
+
+| Priority | Feature |
+| --- | --- |
+| P1 | **Ghost wakes**: the top 5 runs drawn as faint glowing trails, on by default and switchable off. Shows the route the crowd prefers, which is exactly where trap-setters aim. |
+| P1 | **Trap report**: at 00:05 UTC the app comments on yesterday's post with the fastest runner, the deadliest trap and the funniest stat (for example, "u/x's mine sank 12 players in its first hour"). |
+| P2 | **Live ghosts**: players on the same post right now appear as translucent ferries, sent over Devvit realtime at 5 Hz. |
+| P2 | **Patrol boat**: follows a loop through the 4 most-travelled parts of the course, based on finished runs. The more popular a route, the more dangerous it gets. The loop is fixed per course version, so it stays deterministic. |
+| P2 | **Community courses**: a "Create a Wake course" menu item lets any user start a post with an empty course that never resets. |
+| P2 | **Flair**: "Deadliest Trap" and "Fastest Ferry" flair for the day's winners, if the subreddit allows it. |
+
+## 6. A sample day
+
+At 00:00 UTC the post *"Wake · Night of Dec 3"* opens with 3 rocks, 1 searchlight and 3 Legend traps. u/alpha finishes in 24.80 s and places a barge across the narrow gap. It takes them 4 tries to prove it. By lunch there are 26 traps. The fast route everyone used is now blocked by u/beta's searchlight, and the comments are full of "drift past the left rock, don't gun it". u/alpha comes back to find their barge has sunk 31 players. At midnight it carries over as a Legend, and the trap report comment names them.
+
+## 7. Out of scope for the hackathon
+
+Account progression, cosmetics shop, multiple ferries, weather variants, a level editor beyond hazard placement.

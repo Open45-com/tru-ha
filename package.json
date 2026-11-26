@@ -1,11 +1,15 @@
 {
-  "name": "until-tomorrow-playtest",
+  "name": "wake",
   "private": true,
   "version": "0.0.1",
-  "engines": {"node": ">=24"},
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "build": "node devvit/build.cjs",
-    "test": "node --test pilot/art.test.cjs devvit/*.test.cjs",
+    "art:check": "node tools/art.cjs",
+    "test": "node --test",
+    "viewer": "echo \"Asset viewer is built in Gate 0 (BUILD_PLAN.md section 6)\"",
+    "build": "echo \"Build is set up in Gate 0 (BUILD_PLAN.md section 6)\"",
     "playtest": "devvit playtest"
   },
   "dependencies": {
