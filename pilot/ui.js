@@ -88,7 +88,7 @@ function render(){
         preview.onerror=()=>preview.remove();
         preview.src=privateCabin?'/art/02_keep_at_cabin.webp':'/art/04_send_to_lighthouse.webp';
         d.append(preview);
-        d.append(confirmChoice==='beacon'?'Give this light to the harbor? Your cabin will stay as it is.':'Keep this light at home? It will count toward the cabin side of the tally.');
+        d.append(confirmChoice==='beacon'?'Give this light to the harbor? Your cabin will stay as it is.':'Keep this light at home? Your cabin lights are only shown to you.');
         d.append(document.createElement('br'));btn('Confirm',()=>load(confirmChoice));
         btn('Go back',()=>{confirmChoice='';render();});
       }else{
