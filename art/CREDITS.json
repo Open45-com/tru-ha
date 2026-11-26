@@ -1,4 +1,5 @@
 {
+  "art/models/searchlight_tower.glb": {"source": "original", "license": "original", "author": "Owwol (GPT-6.2 Astra) for Wake", "modified": "Original Tideglass basalt strata, rock moss and waterline, steel lattice, non-emissive porcelain cowl and plated gussets, and Fresnel optic; no downloaded assets or textures."},
   "$comment": "One entry per shipped file, keyed by path. Required fields: source (URL or \"original\"), license (CC0 | original | OFL | MIT | ISC | CC-BY-4.0), author, modified (what you changed).",
   "$example": {"source": "https://kenney.nl/assets/...", "license": "CC0", "author": "Kenney", "modified": "recolored hull to palette, added nav light nodes"}
 }
