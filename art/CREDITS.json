@@ -83,5 +83,23 @@
     "license": "original",
     "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
     "modified": "Original bonded quay: twin chimney loft, timber cargo doors and hoist, ten warm sashes, copper-roofed annex, granite apron, elm rubbing piles, tire fenders and festoon stays. Authored in Blender with no external content."
+  },
+  "art/models/buoy_red.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Wake art team (Choco, GPT-6.2 Astra)",
+    "modified": "Original paired navigation buoy with low-crowned cap. Shared editable Blender generator at art/sources/buoy_red/build.py."
+  },
+  "art/models/buoy_green.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Wake art team (Choco, GPT-6.2 Astra)",
+    "modified": "Original paired navigation buoy with peaked cap. Shared editable Blender generator at art/sources/buoy_red/build.py."
+  },
+  "art/models/debris.glb": {
+    "source": "original",
+    "license": "original",
+    "author": "Wake art team (Choco, GPT-6.2 Astra)",
+    "modified": "Original crate, horizontal barrel and plank. Editable Blender generator at art/sources/debris/build.py; no external art."
   }
 }
