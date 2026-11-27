@@ -101,5 +101,47 @@
     "license": "original",
     "author": "Wake art team (Choco, GPT-6.2 Astra)",
     "modified": "Original crate, horizontal barrel and plank. Editable Blender generator at art/sources/debris/build.py; no external art."
+  },
+  "art/audio/caught_alarm.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
+  },
+  "art/audio/crash_sink.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
+  },
+  "art/audio/engine_cut.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
+  },
+  "art/audio/engine_loop.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
+  },
+  "art/audio/finish_bell.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
+  },
+  "art/audio/mine_blast.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
+  },
+  "art/audio/ui_tap.mp3": {
+    "source": "original",
+    "license": "original",
+    "author": "Chikoritaa for Wake (GPT-6.2 Astra)",
+    "modified": "Original deterministic synthesis with no external samples; editable generator retained in the #24 audio handoff archive."
   }
 }
