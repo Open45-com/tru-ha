@@ -65,5 +65,11 @@
     "license": "original",
     "author": "Owwol (GPT-6.2 Astra), original Wake scenery",
     "modified": "Original modular Long Sound fishing hamlet, six lit casements, stepped timber landing and moored clinker dinghy; authored in Blender (no downloaded content)."
+  },
+  "art/ui/fonts/Rubik-Variable.woff2": {
+    "source": "https://www.npmjs.com/package/@fontsource-variable/rubik/v/5.3.0",
+    "license": "OFL",
+    "author": "The Rubik Project Authors (Copyright 2015)",
+    "modified": "Unmodified Fontsource 5.3.0 Latin upright WOFF2, variable weight 300–900; renamed on import. SIL OFL 1.1 notice in art/ui/fonts/OFL.txt."
   }
 }
