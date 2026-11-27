@@ -65,7 +65,7 @@ function checkEntry(kind, name, spec, credits) {
   if (!credit) errors.push(`no entry for "${spec.file}" in art/CREDITS.json`);
   else for (const k of ['source', 'license']) if (!credit[k]) errors.push(`CREDITS entry missing "${k}"`);
   if (credit && credit.license && !/^(CC0|original|OFL|MIT|ISC|CC-BY-4\.0)$/.test(credit.license)) errors.push(`license "${credit.license}" is not on the allowed list`);
-  if (fs.existsSync(file) && !fs.existsSync(at(`art/review/${name}.png`)) && kind === 'models') errors.push(`no in-engine review render at art/review/${name}.png`);
+  if (fs.existsSync(file) && !['png','jpg','webp'].some(ext => fs.existsSync(at(`art/review/${name}.${ext}`))) && kind === 'models') errors.push(`no in-engine review render at art/review/${name}.{png,jpg,webp}`);
   return { status: errors.length ? 'FAIL' : 'ok', errors, info };
 }
 
