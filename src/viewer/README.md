@@ -24,10 +24,11 @@ the tower is absent. Missing water textures enable the procedural preview.
 
 **Capture:** choose **Phone frame** for 40° vertical FOV, 55° pitch, 40 m
 width at the ferry plane, and the ferry waterline at 70% of frame height.
-Choose **Freeze light** to hold the sweep. **Save review PNG** exports a real
-1170 × 2532 rendering. Choose **Close orbit**, drag to orbit and scroll to
-zoom, then export a second PNG. Put accepted candidate frames in
-`art/review/<name>.png` and `<name>_close.png` only for their corresponding
+Choose **Freeze light** to hold the sweep. **Save review frame** exports a real
+1170 × 2532 rendering. JPG at quality 88 is the default; WebP (88) and
+lossless PNG remain available. Choose **Close orbit**, drag to orbit and scroll
+to zoom, then export a second frame. Put accepted candidate frames in
+`art/review/<name>.<ext>` and `<name>_close.<ext>` (JPG, WebP or PNG) only for their corresponding
 delivered model. Keep placeholder calibration frames separate. To reproduce a
 fixed light phase, open e.g. http://127.0.0.1:4173/?asset=searchlight_tower&time=2 .
 Tool controls are excluded from exports; diagnostic labels are preserved.
